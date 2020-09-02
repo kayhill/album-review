@@ -1,0 +1,46 @@
+body {
+    font-size: 16px;
+    background-color: white ;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.btn {
+    background-color: #f752e0;
+}
+.btn:hover {
+    background-color: #ff85ea;
+}
+
+a {
+    color: white;
+}
+
+nav img {
+    height:80px;
+}
+
+nav {
+    background-color: #5e17eb;
+    height: 80px;
+    line-height: 80px;
+    color: rgb(253, 255, 247);
+}
+
+nav i {
+    color:#ffd6f8;
+}
+
+.sidenav {
+    background-color: #af88fc;
+    color: rgb(253, 255, 247);
+}
+
+.sidenav {
+    line-height: 100px;    
+}
+
+.sidenav li>a {
+    color: white;
+    font-size: 1.2em;
+    font-weight: 400;
+}
