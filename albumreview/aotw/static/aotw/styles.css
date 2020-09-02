@@ -1,18 +1,24 @@
 body {
     font-size: 16px;
-    background-color: white ;
+    background-color: white;
+    color: #2c0874;
     font-family: 'Roboto Condensed', sans-serif;
 }
 
 .btn {
     background-color: #f752e0;
+    color: white;
 }
 .btn:hover {
     background-color: #ff85ea;
 }
 
 a {
-    color: white;
+    color:#2c0874;
+}
+
+a:hover {
+    color: #039be5;
 }
 
 nav img {
@@ -43,4 +49,46 @@ nav i {
     color: white;
     font-size: 1.2em;
     font-weight: 400;
+}
+
+.search-bar {
+    padding-top: 100px;
+}
+.album-result {
+    margin-top: 80px;
+}
+
+.album-art {
+    height: 200px;
+}
+.album-art img {
+    height: 200px;
+    
+    background-image: url("./media/music-album-icon-2.jpg");
+}
+
+.album-info {
+    padding-top:30px;
+}
+
+.album-artist {
+    font-weight: 300;
+    font-style: italic;
+}
+
+.album-title {
+    font-weight: 700;
+    font-size: 1.5em;
+}
+
+p {
+    margin: 0 auto;
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .album-result {
+        margin-top: 40px;
+    }
 }
