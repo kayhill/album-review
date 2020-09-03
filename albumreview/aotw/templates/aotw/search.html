@@ -1,77 +1,146 @@
 {% extends "aotw/layout.html" %}
+{% load static %}
 
 {% block body %}
 
-  <div class="container center row search-bar">
+<section id="search-bar">
+  <div class="container page-heading">
+    <h3 class="center">Search for an Album</h3>
+    <p class="center flow-text">Austin hashtag photo booth green juice, locavore beard yr thundercats lyft bicycle rights. Roof party church-key authentic locavore cardigan tumeric. Gluten-free cold-pressed VHS offal disrupt synth enamel pin.</p>
+  </div>
+  <div class="container center row search">
     <form>
-      <div class="input-field col s6 m6 l4">
+      <div class="input-field col s6 m4 l4 offset-l2">
         <select class="browser-default">
           <option value="" disabled selected>Search by...</option>
           <option value="1">Artist</option>
           <option value="2">Album Title</option>
         </select>
       </div>
-      <div class="input-field col s6 m6 l6">            
+      <div class="input-field col s6 m8 l6">            
         <label for="search"><i class="material-icons left">search</i></label>
         <input id="search" type="search" required>            
       </div>
       
     </form>
   </div>
-
-  <section class="divider"></section>
-  <div class="row">
-    <div class="col s12 m6 l4 album-result center">
-      <div class="album-art center">
-        <a href=""><img class="" src="https://upload.wikimedia.org/wikipedia/en/0/09/The_Strokes_-_Is_This_It_cover.png" alt="album-cover"></a>
-      </div>
-      <div class="album-info center">
-        <a href=""><p class="album-title flow-text">Is This It?</p></a>
-        <a href=""><p class="album-artist flow-text">The Strokes</p></a>
-        <a href=""><i class="material-icons purple-text">audiotrack</i></a>
-        <a href=""><i class="material-icons pink-text">favorite</i></a>
-      </div>
-    </div>
-
-    <div class="col s12 m6 l4 album-result center">
-      <div class="album-art center">
-        <a href=""><img class="" src="https://upload.wikimedia.org/wikipedia/en/0/09/The_Strokes_-_Is_This_It_cover.png" alt="album-cover"></a>
-      </div>
-      <div class="album-info center">
-        <a href=""><p class="album-title flow-text">Is This It?</p></a>
-        <a href=""><p class="album-artist flow-text">The Strokes</p></a>
-        <a href=""><i class="material-icons purple-text">audiotrack</i></a>
-        <a href=""><i class="material-icons pink-text">favorite</i></a>
-      </div>
-    </div>
-
-    <div class="col s12 m6 l4 album-result center">
-      <div class="album-art center">
-        <a href=""><img class="" src="https://upload.wikimedia.org/wikipedia/en/0/09/The_Strokes_-_Is_This_It_cover.png" alt="album-cover"></a>
-      </div>
-      <div class="album-info center">
-        <a href=""><p class="album-title flow-text">Is This It?</p></a>
-        <a href=""><p class="album-artist flow-text">The Strokes</p></a>
-        <a href=""><i class="material-icons purple-text">audiotrack</i></a>
-        <a href=""><i class="material-icons pink-text">favorite</i></a>
-      </div>
-    </div>
+</section>
+<section id="search-results">
 
   <div class="row">
-    <div class="col s12 m6 l4 album-result center">
+    <div class="col s12 m6 l4 album-result center border">
       <div class="album-art center">
-        <a href=""><img class="" src="https://upload.wikimedia.org/wikipedia/en/0/09/The_Strokes_-_Is_This_It_cover.png" alt="album-cover"></a>
+        <a href=""><img class="z-depth-2" src="https://upload.wikimedia.org/wikipedia/en/0/09/The_Strokes_-_Is_This_It_cover.png" alt="album-cover"></a>
       </div>
       <div class="album-info center">
-        <a href=""><p class="album-title flow-text">Is This It?</p></a>
-        <a href=""><p class="album-artist flow-text">The Strokes</p></a>
-        <a href=""><i class="material-icons purple-text">audiotrack</i></a>
-        <a href=""><i class="material-icons pink-text">favorite</i></a>
+        <a href="albumview"><p class="album-title flow-text">Is This It?</p></a>
+        <a href="artistview"><p class="album-artist flow-text">The Strokes</p></a>
+        <div class="album-btns-small container">
+          <a class="hover-btn"><i class="material-icons purple-text">stars</i> nominate</a>
+          <a class="hover-btn"><i class="material-icons blue-text">music_note</i> view</a>
+        </div>
       </div>
     </div>
 
+    <div class="col s12 m6 l4 album-result center border">
+      <div class="album-art center">
+        <a href=""><img class="z-depth-2" src="https://upload.wikimedia.org/wikipedia/en/0/09/The_Strokes_-_Is_This_It_cover.png" alt="album-cover"></a>
+      </div>
+      <div class="album-info center">
+        <a href="albumview"><p class="album-title flow-text">Is This It?</p></a>
+        <a href="artistview"><p class="album-artist flow-text">The Strokes</p></a>
+        <div class="album-btns-small container">
+          <a class="hover-btn"><i class="material-icons purple-text">stars</i> nominate</a>
+          <a class="hover-btn"><i class="material-icons blue-text">music_note</i> view</a>
+        </div>
+      </div>
+    </div>
 
+    <div class="col s12 m6 l4 album-result center border">
+      <div class="album-art center">
+        <a href=""><img class="z-depth-2" src="https://upload.wikimedia.org/wikipedia/en/0/09/The_Strokes_-_Is_This_It_cover.png" alt="album-cover"></a>
+      </div>
+      <div class="album-info center">
+        <a href="albumview"><p class="album-title flow-text">Is This It?</p></a>
+        <a href="artistview"><p class="album-artist flow-text">The Strokes</p></a>
+        <div class="album-btns-small container">
+          <a class="hover-btn"><i class="material-icons purple-text">stars</i> nominate</a>
+          <a class="hover-btn"><i class="material-icons blue-text">music_note</i> view</a>
+        </div>
+      </div>
+    </div>
+
+  <div class="row">
+    <div class="col s12 m6 l4 album-result center border">
+      <div class="album-art center">
+        <a href=""><img class="z-depth-2" src="https://upload.wikimedia.org/wikipedia/en/0/09/The_Strokes_-_Is_This_It_cover.png" alt="album-cover"></a>
+      </div>
+      <div class="album-info center">
+        <a href="albumview"><p class="album-title flow-text">Is This It?</p></a>
+        <a href="artistview"><p class="album-artist flow-text">The Strokes</p></a>
+        <div class="album-btns-small container">
+          <a class="hover-btn"><i class="material-icons purple-text">stars</i> nominate</a>
+          <a class="hover-btn"><i class="material-icons blue-text">music_note</i> view</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="spacer"></section>
+
+<section id="no-result" class="container">
+  <div class="container">
+    <h4 class="center white-text">Didn't find what you were looking for?</h4>
+    <div class="text-field purple-text">
+      <h5>Search Tips:</h5>
+        <ul id="nom-tips" class="browser-default flow-text">
+          <li>Double check your spelling, including spaces</li>
+          <li>Are you missing 'The'?</li>
+          <li>Switch your search category: search for artist instead of album, or an album instead of an artist</li>
+        </ul>
+    </div>
+    <div class="text-field purple-text">
+      <p class="flow-text">If you are still having trouble, the artist or album may not exist in the database. </p>
+      <br>
+      <p class="flow-text center white-text">Would you like to submit a custom nomination form?</p>
+      <div class="container center">
+        <button class="btn" id="custom-nom">Yes, please!</button>
+      </div>
+    </div>
   </div>
 
-    
+
+
+
+<div id="nom-form">
+  <!--
+    <div class="row">
+      <form class="col s12" id="nomination-form">
+       <div class="row">
+          <div class="input-field col s8 offset-s2">
+            <input id="artist-nom" type="text" class="validate">
+            <label for="artist-nom">Artist</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s8 offset-s2">
+            <input id="album-nom" type="text" class="validate">
+            <label for="album-nom">Album Title</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field center">
+            <input id="submit-nom" type="submit" class="submit btn" value="Nominate!">            
+          </div>
+        </div>
+      </form>
+    </div>
+
+-->
+</section>
+
+
+
+<script src="{% static 'aotw/search.js' %}"></script>
 {% endblock %}
