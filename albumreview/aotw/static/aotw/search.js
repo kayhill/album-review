@@ -5,23 +5,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('custom-nom').addEventListener('click', () => loadNomForm());
 
-    document.getElementById('search-query').addEventListener('submit', () => searchByArtist())
+    const searchForm = document.getElementById('search-query');
+    searchForm.addEventListener('submit', e => {
+      e.preventDefault();
 
+      if (searchForm.elements["search-option"].value === '1') {
+        let artistName = searchForm.elements["search"].value;
+        searchByArtist(artistName);
+      } else {
+        let albumName = searchForm.elements["search"].value;
+        searchByAlbum(albumName);      }
+      
+    });
   });
 
-async function searchByArtist() {
+async function searchByArtist(artistName) {
     try {        
-        const response = await fetch('https://cors-anywhere.herokuapp.com/https://theaudiodb.com/api/v1/json/1/searchalbum.php?s=daft_punk');
-        const albums = await response.json();        
+        const response = await fetch(`https://www.theaudiodb.com/api/v1/json/523532/searchalbum.php?s=${artistName}`);
+        const json = await response.json();       
+        const albums = await JSON.parse(JSON.stringify(json));
+          displayAlbums(albums);
+          console.log(albums);      
+            
         } catch(error) {
             alert(error);
         }
 }     
 
+
+async function searchByAlbum(albumName) {
+  try {        
+      const response = await fetch(`https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?a=${albumName}`);
+      const json = await response.json();  
+      const albums = await JSON.parse(JSON.stringify(json));
+
+      //TESTING
+      console.log(albums);
+      displayAlbums(albums);      
+      } catch(error) {
+          alert(error);
+      }
+}     
+
 function displayAlbums(albums) {
     const searchResult = document.getElementById('search-results');
+    searchResult.innerHTML='';
+    const albumResults = albums.album.length;
+    albums = albums.album;        
 
-    if (albums.count == 0) {
+    if (albumResults == 0) {
         searchResult.innerHTML = `<div class="text-field purple-text container">
         <h5>Sorry, your search returned 0 results.</h5>
           <ul id="nom-tips" class="browser-default flow-text">
@@ -30,15 +62,25 @@ function displayAlbums(albums) {
             <li>Switch your search category: search for artist instead of album, or an album instead of an artist</li>
           </ul>
       </div>`
-    } else if (albums.count > 0) {
-        albums.forEach(album => {
-            const markup = `<div class="col s12 m6 l4 album-result center border">
+    } else if (albumResults > 0) {
+      let count = 0;
+        for (const album of albums) {
+          let albumPhoto;
+
+          if (album.strAlbumThumb) {
+            albumPhoto = album.strAlbumThumb;
+          } else {
+            albumPhoto = 'https://i.ibb.co/VVFSqNk/music-album-icon-2.jpg'
+          };
+
+          const markup = `
+          <div class="col s12 m6 l4 album-result center border">
             <div class="album-art center">
-              <a href=""><img class="z-depth-2" src="{{ album.strAlbumThumb }}" alt="album-cover"></a>
+              <a href=""><img class="z-depth-2" src="${ albumPhoto }" alt="album-cover"></a>
             </div>
             <div class="album-info center">
-              <a href="albumview"><p class="album-title flow-text">{{ album.strAlbum }}</p></a>
-              <a href="artistview"><p class="album-artist flow-text">{{album. strArtist }}</p></a>
+              <a href="albumview"><p class="album-title flow-text">${ album.strAlbum }</p></a>
+              <a href="artistview"><p class="album-artist flow-text">${album.strArtist }</p></a>
               <div class="album-btns-small container">
                 <a class="hover-btn"><i class="material-icons purple-text">stars</i> nominate</a>
                 <a class="hover-btn"><i class="material-icons blue-text">music_note</i> view</a>
@@ -46,8 +88,9 @@ function displayAlbums(albums) {
             </div>
           </div>`;
           searchResult.insertAdjacentHTML('beforeend', markup);       
-        });
-    }
+        }
+          
+      };
 }
 
   function loadNomForm() {

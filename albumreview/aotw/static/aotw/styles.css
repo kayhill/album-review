@@ -69,8 +69,8 @@ nav img {
 
 nav {
     background-color: #5e17eb;
-    height: 80px;
-    line-height: 80px;
+    height: 90px;
+    line-height: 90px;
     color: rgb(253, 255, 247);
 }
 
@@ -96,7 +96,7 @@ nav i {
 /* search  */
 
 #search-bar {
-    background-color: rgb(253, 243, 228);
+    background-color: mediumpurple;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -124,7 +124,6 @@ nav i {
 }
 .album-art img {
     height: 200px;    
-    background-image: url("./media/music-album-icon-2.jpg");
 }
 
 .album-info {

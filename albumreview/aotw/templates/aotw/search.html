@@ -11,7 +11,7 @@
   <div class="container center row search">
     <form id="search-query">
       <div class="input-field col s5 m4 l4">
-        <select class="browser-default">
+        <select class="browser-default" name="search-option" required>
           <option value="" disabled selected>Search by...</option>
           <option value="1">Artist</option>
           <option value="2">Album Title</option>
@@ -20,7 +20,7 @@
           
       <div class="input-field col s6 m7 l6">            
         <label for="search"><i class="material-icons left">search</i></label>
-        <input id="search" type="search" required>            
+        <input id="search" name="search" type="search" required>            
       </div>  
 
       <div class="input-field col s1 m1 l2">            
@@ -29,7 +29,7 @@
     </form>
   </div>
 </section>
-<section id="search-results">
+<section id="search-results" class="row">
 
   <!-- no results 
   <div class="text-field purple-text container">
@@ -41,8 +41,9 @@
       </ul>
   </div>
 -->
-  <!-- display results
-  <div class="row">
+  
+ 
+    <!--
     <div class="col s12 m6 l4 album-result center border">
       <div class="album-art center">
         <a href=""><img class="z-depth-2" src="https://upload.wikimedia.org/wikipedia/en/0/09/The_Strokes_-_Is_This_It_cover.png" alt="album-cover"></a>
@@ -99,10 +100,12 @@
         </div>
       </div>
     </div>
-  </div>
+    -->
+  
+
+
 </section>
 
- -->
 
 <section class="spacer"></section>
 
