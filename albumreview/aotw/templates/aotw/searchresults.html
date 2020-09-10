@@ -1,0 +1,29 @@
+{% extends "aotw/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<section id="search-results" class="row">
+
+{% for album in albums %}
+<div class="col s12 m6 l4 album-result center border">
+  <div class="album-art center">
+    {% if album.strAlbumThumb %}
+    <a href=""><img class="z-depth-2" src="{{ album.strAlbumThumb }}" alt="album-cover"></a>
+    {% else %}
+    <a href=""><img class="z-depth-2" src="https://i.ibb.co/VVFSqNk/music-album-icon-2.jpg" alt="album-cover"></a>
+    {% endif %}
+  </div>
+  <div class="album-info center">
+    <a href="{% url 'album' album.idAlbum %}"><p class="album-title flow-text">{{ album.strAlbum }}</p></a>
+    <a href="artistview"><p class="album-artist flow-text">{{ album.strArtist }}</p></a>
+    <div class="album-btns-small container">
+      <a class="hover-btn"><i class="material-icons purple-text">stars</i> nominate</a>
+      <a class="hover-btn"><i class="material-icons blue-text">music_note</i> view</a>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</section>
+
+{% endblock %}

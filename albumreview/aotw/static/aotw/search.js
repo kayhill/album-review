@@ -53,7 +53,8 @@ function displayAlbums(albums) {
     const albumResults = albums.album.length;
     albums = albums.album;        
 
-    if (albumResults == 0) {
+    if (albumResults == 0) {     
+
         searchResult.innerHTML = `<div class="text-field purple-text container">
         <h5>Sorry, your search returned 0 results.</h5>
           <ul id="nom-tips" class="browser-default flow-text">
@@ -63,7 +64,9 @@ function displayAlbums(albums) {
           </ul>
       </div>`
     } else if (albumResults > 0) {
-      let count = 0;
+      let li = document.createElement('div')
+      document.querySelector('ul').appendChild(li)
+      
         for (const album of albums) {
           let albumPhoto;
 
@@ -76,14 +79,14 @@ function displayAlbums(albums) {
           const markup = `
           <div class="col s12 m6 l4 album-result center border">
             <div class="album-art center">
-              <a href=""><img class="z-depth-2" src="${ albumPhoto }" alt="album-cover"></a>
+              <a href="album/${ album.idAlbum }"><img class="z-depth-2" src="${ albumPhoto }" alt="album-cover"></a>
             </div>
             <div class="album-info center">
-              <a href="albumview"><p class="album-title flow-text">${ album.strAlbum }</p></a>
-              <a href="artistview"><p class="album-artist flow-text">${album.strArtist }</p></a>
+              <a href="album/${ album.idAlbum }"><p class="album-title flow-text">${ album.strAlbum }</p></a>
+              <a href=""><p class="album-artist flow-text">${album.strArtist }</p></a>
               <div class="album-btns-small container">
-                <a class="hover-btn"><i class="material-icons purple-text">stars</i> nominate</a>
-                <a class="hover-btn"><i class="material-icons blue-text">music_note</i> view</a>
+                <a href="nominate/${ album.idAlbum }" class="hover-btn nominate-btn"><i class="material-icons purple-text">stars</i> nominate</a>
+                <a class="hover-btn view-btn"><i class="material-icons blue-text">music_note</i> view</a>
               </div>
             </div>
           </div>`;

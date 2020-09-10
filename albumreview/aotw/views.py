@@ -8,13 +8,44 @@ from django.urls import reverse
 
 from .models import User
 
-# Create your views here.
+import requests
+
 
 def index(request):
     return render(request, "aotw/index.html")
 
-def search(request):
+
+def search(request):            
     return render(request, "aotw/search.html")
+
+
+def artistsearch(request, artist):
+    response = requests.get('https://www.theaudiodb.com/api/v1/json/523532/searchalbum.php?s=%s' % artist)
+    response = response.json()
+    albums = response['album']            
+    return render(request, "aotw/searchresults.html", {"albums": albums})
+
+
+def albumsearch(request, album):
+    response = requests.get('https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?a=%s' % album)
+    response = response.json()
+    albums = response['album']            
+    return render(request, "aotw/searchresults.html", {"albums": albums})
+
+
+def album(request, album_id):
+    response = requests.get('https://theaudiodb.com/api/v1/json/1/album.php?m=%s' % album_id)
+    response = response.json()
+    album = response['album']
+    
+    return render(request, "aotw/album.html", {"album": album})     
+
+
+def nominate(request, album_id):
+    return HttpResponseRedirect(reverse("nominations"))
+    
+def nominations(request):
+    return render(request, "aotw/nominations.html")
 
 def register(request):
     if request.method == "POST":
