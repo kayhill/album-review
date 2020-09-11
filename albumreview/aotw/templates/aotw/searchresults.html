@@ -5,25 +5,134 @@
 
 <section id="search-results" class="row">
 
-{% for album in albums %}
+
+{% for album in page_obj %}
+
 <div class="col s12 m6 l4 album-result center border">
   <div class="album-art center">
+
     {% if album.strAlbumThumb %}
-    <a href=""><img class="z-depth-2" src="{{ album.strAlbumThumb }}" alt="album-cover"></a>
+    <a href="{% url 'album' album.idAlbum %}"><img class="z-depth-2" src="{{ album.strAlbumThumb }}" alt="placeholder image for album cover"></a>
     {% else %}
-    <a href=""><img class="z-depth-2" src="https://i.ibb.co/VVFSqNk/music-album-icon-2.jpg" alt="album-cover"></a>
+    <a href="{% url 'album' album.idAlbum %}"><img class="z-depth-2" src="https://i.ibb.co/VVFSqNk/music-album-icon-2.jpg" alt="album-cover"></a>
     {% endif %}
+
   </div>
   <div class="album-info center">
     <a href="{% url 'album' album.idAlbum %}"><p class="album-title flow-text">{{ album.strAlbum }}</p></a>
-    <a href="artistview"><p class="album-artist flow-text">{{ album.strArtist }}</p></a>
+    <a href="{% url 'artist' album.idArtist %}"><p class="album-artist flow-text">{{ album.strArtist }}</p></a>
     <div class="album-btns-small container">
       <a class="hover-btn"><i class="material-icons purple-text">stars</i> nominate</a>
-      <a class="hover-btn"><i class="material-icons blue-text">music_note</i> view</a>
+      <a class="hover-btn" href="{% url 'album' album.idAlbum %}"><i class="material-icons blue-text">music_note</i> view</a>
     </div>
   </div>
 </div>
-{% endfor %}
+
+{% empty %}
+<div class="text-field purple-text container">
+  <h5>Sorry, your search returned 0 results.</h5>
+    <ul id="nom-tips" class="browser-default flow-text">
+      <li>Double check your spelling, including spaces</li>
+      <li>Are you missing 'The'?</li>
+      <li>Switch your search category: search for artist instead of album, or an album instead of an artist</li>
+    </ul>
+</div>
 </section>
+
+{% endfor %}
+
+{% if page_obj %}
+<section id="pagination-links" class="row container">
+  <span class="step-links">
+      {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+  </span>
+</div>
+</section>
+{% endif %}
+
+<section id="search-bar">
+  <div class="container">
+    <h3 class="center">New Search</h3>
+  </div>
+  <div class="container center row search">
+
+    <form id="search-query" action="{% url 'search' %}" method="POST">
+      {% csrf_token %}
+      <div class="input-field col s6 m4 l4">
+        <select class="browser-default" name="search-option" required>
+          <option value="" disabled selected>Search by...</option>
+          <option value="1">Artist</option>
+          <option value="2">Album Title</option>
+        </select>
+      </div>
+          
+      <div class="input-field col s6 m6 l6">            
+        <label for="search"><i class="material-icons left">search</i></label>
+        <input id="search" name="search" type="search" required>            
+      </div>  
+
+      <div class="input-field col s6 offset-s3 m2 l2">            
+        <input id="search-submit" type="submit" class="btn" value="go">       
+      </div>  
+    </form>
+  </div>
+</section>
+
+<!--
+<section id="no-result" class="container">
+  <div class="container">
+    <h4 class="center white-text">Didn't find what you were looking for?</h4>
+    
+    <div class="text-field purple-text">
+      <p class="flow-text">If you are still having trouble, the artist or album may not exist in the database. </p>
+      <br>
+      <p class="flow-text center white-text">Would you like to submit a custom nomination form?</p>
+      <div class="container center">
+        <button class="btn" id="custom-nom">Yes, please!</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<div id="nom-form" style="display:none">
+    <div class="row">
+      <form class="col s12" id="nomination-form">
+       <div class="row">
+          <div class="input-field col s8 offset-s2">
+            <input id="artist-nom" type="text" class="validate">
+            <label for="artist-nom">Artist</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s8 offset-s2">
+            <input id="album-nom" type="text" class="validate">
+            <label for="album-nom">Album Title</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field center">
+            <input id="submit-nom" type="submit" class="submit btn" value="Nominate!">            
+          </div>
+        </div>
+      </form>
+    </div>
+</section>
+-->
+
+<script src="{% static 'aotw/search.js' %}"></script>
 
 {% endblock %}

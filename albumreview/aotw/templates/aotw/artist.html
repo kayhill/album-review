@@ -1,0 +1,39 @@
+{% extends "aotw/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+{% for a in artists %}
+<div class="row container">
+    <div class="col s12 center">        
+        <img id="band-logo" src="{{ a.strArtistLogo }}" alt="{{ a.strArtist }}">        
+    </div>
+</div>
+<div class="row container">
+    <div class="col s12 m4 l4 center">
+        <ul class="flow-text">
+            <li>Formed: {{ a.intFormedYear }}</li>
+            {% if a.strDisbanded %}
+                <li>Disbanded: {{ a.strDisbanded }} </li>
+            {% endif %}
+            <li>{{ a.strCountry }}</li>
+            <li>Genre: {{ a.strGenre }}</li>
+            <li>Label: {{ a.strLabel }}</li>
+        </ul>
+        <a href="{% url 'albumsearch' "><span class="flow-text">View Albums</span></a>
+    </div>
+    <div class="col s12 m8 l8 center">
+        <img src="{{ a.strArtistThumb }}" alt="artist image" id="band-image">
+    </div>
+</div>
+<div class="row container">    
+    <div class="col s12 l12">
+        <p class="flow-text">{{ a.strBiographyEN }}</p>
+    </div>
+    
+</div>
+
+
+{% endfor %}
+
+{% endblock %}

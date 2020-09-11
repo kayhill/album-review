@@ -8,9 +8,9 @@ urlpatterns = [
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
     path("search", views.search, name="search"),
-    path("search/artist/<str:artist>", views.artistsearch, name="artistsearch"),
-    path("search/album/<str:album>", views.albumsearch, name="albumsearch"),
+    path("search/<str:search_type>/<str:query>", views.albumsearch, name="albumsearch"),
     path("album/<str:album_id>", views.album, name="album"),
+    path("artist/<str:artist_id>", views.artist, name="artist"),
     path("nominate/<str:album_id>", views.nominate, name="nominate"),
     path("nominations", views.nominations, name="nominations")
 ]

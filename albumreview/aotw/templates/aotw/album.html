@@ -3,9 +3,47 @@
 
 {% block body %}
 
+{% for a in album %} 
+<section id="album-header" class="row container center">
+    <div class="col s12 m6 l6 center">
+        <h2>{{ a.strAlbum }}</h2>
+        <h4 class="album-artist">by <a href="{% url 'artist' a.idArtist %}">{{ a.strArtist }}</a></h4>
+    </div>
 
+    <div class="col s12 m6 l6 center">
+        <div class="album-cover-big border">
+        {% if a.strAlbumThumb %}
+            <a href="{% url 'album' a.idAlbum %}"><img class="z-depth-2" src="{{ a.strAlbumThumb }}" alt="placeholder image for album cover"></a>
+        {% else %}
+            <a href="{% url 'album' a.idAlbum %}"><img class="z-depth-2" src="https://i.ibb.co/VVFSqNk/music-album-icon-2.jpg" alt="album-cover"></a>
+        {% endif %}
+        </div>
+    </div>
+</section>
 
-<h2>{{ album.strAlbum }}</h2>
+<section id="album-info-section" class="row container center">
+    <div class="col s6">
+        <ul class="flow-text">
+            <li>Year Released: {{ a.intYearReleased }}</li>
+            <li>Label: {{ a.strLabel }}</li>
+            <li>Genre: {{ a.strGenre }} </li>
+        </ul>
+    </div>
+
+    <div class="col s6 m6 l6">
+        <br>
+        <p>Previously nominated: </p>
+        <a class=""><i class="material-icons purple-text">stars</i> nominate</a>
+    </div>
+</section>
+
+<section class="row container center" id="album-description-section">
+    <div class="col s12">
+        <p class="flow-text">{{ a.strDescriptionEN }}</p>
+    </div>
+</section>
+{% endfor %}
+
 
 
 

@@ -3,8 +3,8 @@
 
 body {
     font-size: 16px;
-    background-color: white;
-    color: #2c0874;
+    background-color: ghostwhite;
+    color: #0d0222;
     font-family: 'Roboto Condensed', sans-serif;    
 }
 
@@ -19,7 +19,7 @@ body {
 }
 
 a {
-    color:#2c0874;
+    color:#0c0122;
 }
 
 a:hover {
@@ -33,7 +33,7 @@ a:hover {
 h1, h2, h3, h4, h5 {
     margin-block-start: 0;
     margin-block-end: 0;
-    padding: 1em;
+    padding: 0;
 }
 
 h5 {
@@ -68,7 +68,7 @@ nav img {
 }
 
 nav {
-    background-color: #5e17eb;
+    background-color: black;
     height: 90px;
     line-height: 90px;
     color: rgb(253, 255, 247);
@@ -79,7 +79,7 @@ nav i {
 }
 
 .sidenav {
-    background-color: #af88fc;
+    background-color: #f3c9f5;
     color: rgb(253, 255, 247);
 }
 
@@ -95,8 +95,12 @@ nav i {
 
 /* search  */
 
+#search-submit {
+    margin-top: 0px;
+}
 #search-bar {
-    background-color: mediumpurple;
+    margin-top: 50px;
+    background-color: ghostwhite;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -146,10 +150,44 @@ nav i {
     background-repeat: no-repeat;
 }
 
+/* Album View */
+
+.album-cover-big img {
+    height: 300px;  
+    margin-top: 50px;  
+}
+
+#album-header {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Artist View */
+#band-logo {
+    max-width: 80vw;    
+}
+
+#band-image {
+    max-width: 70vw;
+}
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
     .album-result {
         margin-top: 50px;
     }
+
+    .album-cover-big img {
+        height: 400px;
+        margin-top: 0px; 
+    }
+    
+    #album-header {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }   
+    #band-image {
+        max-width: 40vw;
+    }
+
 }
