@@ -8,7 +8,7 @@ class User(AbstractUser):
     pass
 
 class Album(models.Model):
-    audioDB_albumID = models.PositiveIntegerField(blank=False, unique=True)
+    audioDB_albumID = models.PositiveIntegerField(blank=True, unique=True)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     artist = models.CharField(max_length=100)

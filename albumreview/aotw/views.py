@@ -48,6 +48,7 @@ def albumsearch(request, search_type, query):
             page_obj = paginator.get_page(page_number)            
         
             return render(request, "aotw/searchresults.html", {
+                    'results': len(albums),
                     'albums': albums,
                     'page_obj': page_obj})
 
@@ -77,6 +78,7 @@ def artist(request, artist_id):
 
 def nominate(request, album_id):
     ## check if album in db
+    
 
     ## save to db
     return HttpResponseRedirect(reverse("nominations"))

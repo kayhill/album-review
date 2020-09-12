@@ -3,7 +3,14 @@
 
 {% block body %}
 
+
+{% if results %}
+<h4>Your search returned {{ results }} results </h3>
+{% endif %}
+
+
 <section id="search-results" class="row">
+
 
 
 {% for album in page_obj %}

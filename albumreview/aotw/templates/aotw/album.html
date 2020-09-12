@@ -3,6 +3,8 @@
 
 {% block body %}
 
+
+
 {% for a in album %} 
 <section id="album-header" class="row container center">
     <div class="col s12 m6 l6 center">
@@ -33,7 +35,7 @@
     <div class="col s6 m6 l6">
         <br>
         <p>Previously nominated: </p>
-        <a class=""><i class="material-icons purple-text">stars</i> nominate</a>
+        <a href="{% url 'nominate' a.idAlbum %}" class=""><i class="material-icons purple-text">stars</i> nominate</a>
     </div>
 </section>
 
