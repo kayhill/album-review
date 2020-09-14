@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.forms import ModelForm
 
 
 class User(AbstractUser):
@@ -52,5 +53,9 @@ class Review(models.Model):
             MaxValueValidator(5),
             MinValueValidator(-5)
         ])
-    
+
+class ReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        exclude = ['user', 'created_on']
 

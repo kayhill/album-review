@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.core.paginator import Paginator
 
-from .models import User, Album, Nomination, Review
+from .models import User, Album, Nomination, Review, ReviewForm
 
 import requests
 
@@ -58,6 +58,7 @@ def albumsearch(request, search_type, query):
 
 
 def album(request, album_id):
+
     ## if album in database, read from db
 
     ## check if nominated
@@ -78,14 +79,58 @@ def artist(request, artist_id):
 
 def nominate(request, album_id):
     ## check if album in db
-    
+    ## if yes
+    checkalb = Album.objects.get(audioDB_albumID=album_id)
+    if checkalb:
+        # check for nomination
+        nom = Nomination.objects.filter(album=checkalb, user=request.user)
+        if nom.length > 0:
+            return HttpResponseRedirect(reverse("nominations"))
+        #  add nomination
+        else: 
+            nom = Nomination()
+            nom.album = checkalb
+            nom.user = request.user
+            nom.save()
 
-    ## save to db
+    ## if not,
+    else: 
+        # get album info
+        response = requests.get('https://theaudiodb.com/api/v1/json/1/album.php?m=%s' % album_id)
+        response = response.json()
+        album = response['album']
+        
+        # save to DB 
+        for a in album:
+            newalb = Album()
+            newalb.audioDB_albumID = album_id
+            newalb.title = a['strAlbum']
+            newalb.description = a['strDescriptionEN']
+            newalb.artist = a['strArtist']
+            newalb.audioDB_artistID = a['idArtist']
+            newalb.album_art = a['strAlbumThumb']
+            newalb.year = a['intYearReleased']
+            newalb.label = a['strLabel']
+            if a['strGenre']:
+                newalb.genre = a['strGenre']
+            else:
+                newalb.genre = ''
+            newalb.save()
+    
+        # add nomination
+        nom = Nomination()
+        nom.album = newalb
+        nom.user = request.user
+        nom.save()
+
     return HttpResponseRedirect(reverse("nominations"))
     
 def nominations(request):
     ## render all nominations
-    return render(request, "aotw/nominations.html")
+    nominations= Nomination.objects.all()
+    return render(request, "aotw/nominations.html", {
+        "nominations": nominations
+    })
 
 def register(request):
     if request.method == "POST":

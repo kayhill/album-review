@@ -1,0 +1,16 @@
+{% extends "aotw/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+{% for nom in nominations %}
+
+    <h2>{{ nom.album.title }} by {{ nom.album.artist }}</h2>
+
+{% empty %}
+
+    <p>There are no pending nominations.</p>
+
+{% endfor %}
+
+{% endblock %}
