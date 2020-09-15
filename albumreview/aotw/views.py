@@ -12,9 +12,55 @@ from .models import User, Album, Nomination, Review, ReviewForm
 import requests
 
 
-
 def index(request):
-    return render(request, "aotw/index.html")
+    user = request.user
+     # Get current AOTW
+    try:
+        aotw = Nomination.objects.get(active=True)
+        
+    except Nomination.DoesNotExist:
+        aotw = None        
+
+    ## Upcoming Nominations
+    nominations = Nomination.objects.filter(aotw=False)
+    # Past Nominations
+    pastnoms = Nomination.objects.filter(aotw=True, active=False)
+    # Is user an admin?
+    if user.groups.filter(name="leader").exists():
+        leader = True
+    else:
+        leader = False
+
+    # Reviews
+    if aotw: 
+        reviews = Review.objects.filter(album=aotw.album.id)
+        
+        album = Album.objects.get(id=aotw.album.id)
+        score = 0
+        # Calculate average rating
+        if len(reviews) > 0:
+            for review in reviews:
+                score += review.rating 
+            score = score/len(reviews)      
+            album.score = score
+            album.save()       
+    # Review Form
+        form = ReviewForm(request.POST or None)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = user
+            review.save()
+            return HttpResponseRedirect(reverse("index"))
+
+    return render(request, "aotw/index.html", {
+        "aotw": aotw,
+        "nominations": nominations,
+        "pastnoms": pastnoms,
+        "form": form, 
+        "reviews": reviews,
+        "score": score, 
+        "leader": leader
+    })   
 
 
 def search(request):
@@ -52,34 +98,46 @@ def albumsearch(request, search_type, query):
                     'results': len(albums),
                     'albums': albums,
                     'page_obj': page_obj})
-
         else: 
             return render(request, "aotw/searchresults.html", {
                 'albums': albums})
 
 
 def album(request, album_id):
-
     ## if album in database, read from db
     try:
         album = Album.objects.get(audioDB_albumID=album_id)
-    except Nomination.DoesNotExist:
+        score = album.score
+        ## check if nominated
+        try: 
+            nomination = Nomination.objects.get(album=album.id)
+        except Nomination.DoesNotExist:
+            nomination = None
+
+        try:
+            reviews = Review.objects.filter(album=album.id)
+        except Review.DoesNotExist: 
+            reviews = None
+
+        return render(request, "aotw/nominatedalbum.html", {
+        "album": album,
+        "nomination": nomination,
+        "reviews": reviews,
+        "score": score
+        })       
+
+    except Album.DoesNotExist:
         ## if album NOT in database, get from API
         response = requests.get('https://theaudiodb.com/api/v1/json/1/album.php?m=%s' % album_id)
         response = response.json()
         album = response['album']
-    
-    if album:
-        ## check if nominated
-        try: 
-            nomination = Nomination.objects.get(album=album)
-        except Nomination.DoesNotExist:
-            nomination = None
+        nomination = None
 
     return render(request, "aotw/album.html", {
         "album": album,
         "nomination": nomination
         })     
+
 
 def artist(request, artist_id):
     ##always get from API
@@ -118,11 +176,20 @@ def nominate(request, album_id):
             newalb = Album()
             newalb.audioDB_albumID = album_id
             newalb.title = a['strAlbum']
-            newalb.description = a['strDescriptionEN']
+            try:
+                newalb.description = a['strDescriptionEN']
+            except KeyError:
+                newalb.description = ''
             newalb.artist = a['strArtist']
             newalb.audioDB_artistID = a['idArtist']
-            newalb.album_art = a['strAlbumThumb']
-            newalb.year = a['intYearReleased']
+            if a['strAlbumThumb']:
+                newalb.album_art = a['strAlbumThumb']
+            else:
+                newalb.album_art = ''
+            if a['intYearReleased']:
+                newalb.year = a['intYearReleased']
+            else: 
+                newalb.year = ''
             if a['strLabel']:
                 newalb.label = a['strLabel']
             else: 
@@ -158,6 +225,7 @@ def profile(request, username):
         "nominations": nominations,
         "reviews": reviews
     })
+
 
 @login_required
 def adminpage(request):

@@ -3,8 +3,6 @@
 
 {% block body %}
 
-
-
 {% for a in album %} 
 <section id="album-header" class="row container center">
     <div class="col s12 m6 l6 center">
@@ -28,7 +26,9 @@
         <ul class="flow-text">
             <li>Year Released: {{ a.intYearReleased }}</li>
             <li>Label: {{ a.strLabel }}</li>
-            <li>Genre: {{ a.strGenre }} </li>
+            {% if a.strGenre %}
+            <li> Genre: {{ a.strGenre }}</li>
+            {% endif %}
         </ul>
     </div>
 

@@ -1,0 +1,81 @@
+{% extends "aotw/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+
+<section id="album-header" class="row container center">
+    <div class="col s12 m6 l6 center">
+        <h2>{{ album.title }}</h2>
+        <h4 class="album-artist">by <a href="{% url 'artist' album.audioDB_artistID %}">{{ album.artist }}</a></h4>
+    </div>
+
+    <div class="col s12 m6 l6 center">
+        <div class="album-cover-big border">
+        {% if album.album_art %}
+            <img class="z-depth-2" src="{{ album.album_art }}" alt="placeholder image for album cover">
+        {% else %}
+            <img class="z-depth-2" src="https://i.ibb.co/VVFSqNk/music-album-icon-2.jpg" alt="album-cover">
+        {% endif %}
+        </div>
+    </div>
+</section>
+
+<section id="album-info-section" class="row container center">
+    <div class="col s6">
+        <ul class="flow-text">
+            <li>Year Released: {{ album.year }}</li>
+            <li>Label: {{ album.label }}</li>
+            <li>Genre: {{ album.genre }} </li>
+        </ul>
+    </div>
+
+    <div class="col s6 m6 l6">
+        <br>
+        {% if nomination %}
+            {% if nomination.aotw == True %}
+            <p> Past AOTW </p>
+            <p> AOTW Score: {{ score }} </p>
+            {% else %}
+            <p> Nominated by {{ nomination.user.username|title }} on {{ nomination.created_on }} </p>
+            {% endif %}
+        {% else %}
+        <a href="{% url 'nominate' a.idAlbum %}" class=""><i class="material-icons purple-text">stars</i> nominate</a>
+        {% endif %}
+    </div>
+</section>
+
+
+<section class="row container center" id="reviews">
+    <div class="col s12">
+            <h2>Community Reviews</h2>
+            {% if user.is_authenticated %}
+            {% if reviews %}
+                {% for review in reviews %}
+                <h5>{{ review.rating }} </h5>
+                <span>by {{ review.user|title }}</span>
+                <p>{{ review.review_text }} </p>
+                <p>Top Tracks: {{ review.top_tracks }}</p>
+                {% endfor %}
+            {% else %}
+                <p>No reviews yet!</p>
+            {% endif %}
+            {% else %}
+            <p> Log in to see what the people are saying about this album. </p>
+            {% endif %}
+        </section>
+    </div>
+</section>
+
+
+<section class="row container center" id="album-description-section">
+    <div class="col s12">
+        <p class="flow-text">{{ album.description }}</p>
+    </div>
+</section>
+
+
+
+
+
+{% endblock %}

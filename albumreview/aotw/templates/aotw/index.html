@@ -2,6 +2,95 @@
 
 {% block body %}
 
+{% if leader == True %}
+<section id="admin-banner">
+    <span>You're logged in as group leader. <a href="{% url 'adminpage' %}"> Visit the admin page.</a></span>
+</section>
+{% endif %}
 
+<section id="aotw_home" class="container">
+    <h2>Album of the Week</h2>
+    {% if aotw %}
+        <h5>{{ aotw.album }} </h5>
+        <p>Average Rating: {{ score }} </p>
+    {% else %}
+        <p>There is not an active AOTW. Nominate an album to review.</p>
+    {% endif %}
+</section>
+
+{% if user.is_authenticated %}
+<section id="add_review" class="container">
+    <h2>Add New Review</h2>
+    <div class="row">
+      <form action="{% url 'index' %}" method="post" class="col s12">
+        {% csrf_token %}
+        <input type="select" name="album" id="album" value="{{ aotw.album.id }}" style="visibility: hidden;">
+        <div class="row">
+            <div class="input-field col s6">                
+                <p class="range-field">
+                    <label for="rating">Rate It</label>
+                    <input type="range" name="rating" id="rating" min="-5" max="5" />
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <label for="review_text">What did you think?</label>
+                {{ form.review_text }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <label for="top_tracks">Top Tracks</label>
+                {{ form.top_tracks }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">                
+                <input type="submit" class="btn waves-effect waves-light" name="review" value="Publish">
+            </div>
+        </div>
+
+      </form>
+    </div>
+    
+</section>
+
+<section id="aotw_reviews" class="container">
+    <h2>Community Reviews</h2>
+    {% if reviews %}
+        {% for review in reviews %}
+        <h5>{{ review.rating }} </h5>
+        <span>by {{ review.user|title }}</span>
+        <p>{{ review.review_text }} </p>
+        <p>Top Tracks: {{ review.top_tracks }}</p>
+        {% endfor %}
+    {% else %}
+        <p>Be the first to review this album!</p>
+    {% endif %}
+</section>
+
+{% else %}
+<div class="container">
+    <p> What are the people saying!? Log in to read reviews and add your own. </p>
+</div>
+
+{% endif %}
+
+
+<section id="past-aow" class="container">
+    <h4>Past AOTWs</h4>
+    {% for pastnom in pastnoms %}
+        <a href="{% url 'album' pastnom.album.audioDB_albumID %}"><p>{{ pastnom.album }}</p></a>
+
+    {% endfor %}
+</section>
+
+<section id="upcoming-aow" class="container">
+    <h4>Upcoming Albums</h4>
+    {% for nom in nominations %}
+        <p>{{ nom.album }}</p>
+    {% endfor %}
+</section>
 
 {% endblock %}

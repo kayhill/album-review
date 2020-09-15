@@ -19,6 +19,7 @@ class Album(models.Model):
     year = models.PositiveSmallIntegerField(blank=True)
     label = models.CharField(max_length=100, blank=True)
     genre = models.CharField(max_length=100, blank=True)
+    score = models.SmallIntegerField(blank=True, null=True)
 
     def __str__(self):
         return(f'{self.title} by {self.artist}')
