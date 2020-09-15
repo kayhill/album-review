@@ -1,0 +1,48 @@
+{% extends "aotw/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+
+<h3>Welcome, AOTW Admin!</h3>
+    {% if aotw %}
+    <section id="current" class="row">
+        <h5>Album of the Week</h5>
+        <p>{{ aotw.album.title}} by {{ aotw.album.artist }}</p>
+        <p>{{ aotw.aotw_date }}</p>
+
+    </section>
+    {% endif %}
+
+    <section id="upcoming" class="row">
+        <ul>
+        {% for nom in nominations %}
+            <li>{{ nom.album.title }} by {{ nom.album.artist }}
+               <br> Nominated by {{ nom.user|title }} on {{ nom.created_on }}
+               <br> 
+               <form action="" method="POST">
+                   {% csrf_token %}
+                   <button class="btn" type="submit" name="promote" value="{{ nom.album.id }}">Promote to AOTW</button>
+                </form>
+            </li>    
+        {% empty %}
+         <li>There are no pending nominations.</li>
+        {% endfor %}
+        </ul>
+    </section>
+
+    <section id="past" class="row">
+        <ul>
+            <h5>Past AOTW's</h5>
+            {% for pastnom in pastnoms %}
+                <li>{{ pastnom.album.title }} by {{ pastnom.album.artist }}
+                </li>    
+            {% empty %}
+             <li>There are no past AOTW.</li>
+            {% endfor %}
+            </ul>
+    </section>
+
+</div>
+
+{% endblock %}

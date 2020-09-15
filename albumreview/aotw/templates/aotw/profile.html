@@ -1,0 +1,26 @@
+{% extends "aotw/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<h3>{{ user.username|title }}</h3>
+
+<p>Joined: {{ user.date_joined }} </p>
+
+<h5> Nominations </h5>
+    <ul>
+    {% for nom in nominations %}
+        <li>{{ nom.album.title }}</li>
+    {% endfor %}
+    </ul>
+
+<h5> Reviews </h5>
+    <ul>
+    {% for review in reviews %}
+        <li>{{ review.album.title }} rated {{ review.rating }}</li>
+    {% endfor %}
+    </ul>
+
+
+
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from datetime import datetime
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.forms import ModelForm
@@ -23,7 +24,7 @@ class Album(models.Model):
         return(f'{self.title} by {self.artist}')
     
 class Nomination(models.Model):
-    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    album = models.OneToOneField(Album, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE) 
     created_on = models.DateTimeField(auto_now_add=True)
 
@@ -37,7 +38,7 @@ class Nomination(models.Model):
 
     def save(self, *args, **kwargs):
         if not self._aotw and self.aotw:
-            self.aotw_date = django.timezone.now()
+            self.aotw_date = timezone.now()
         super(Nomination, self).save(*args, **kwargs)
 
     def __str__(self):

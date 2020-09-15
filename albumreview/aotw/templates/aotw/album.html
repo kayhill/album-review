@@ -34,8 +34,15 @@
 
     <div class="col s6 m6 l6">
         <br>
-        <p>Previously nominated: </p>
+        {% if nomination %}
+            {% if nomination.aotw == True %}
+            <p> Past AOTW </p>
+            {% else %}
+            <p> Nominated by {{ nomination.user.username|title }} on {{ nomination.created_on }} </p>
+            {% endif %}
+        {% else %}
         <a href="{% url 'nominate' a.idAlbum %}" class=""><i class="material-icons purple-text">stars</i> nominate</a>
+        {% endif %}
     </div>
 </section>
 

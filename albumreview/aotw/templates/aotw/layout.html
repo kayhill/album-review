@@ -17,7 +17,7 @@
           <a href="#" class="brand-logo"><img src="{% static '/aotw/media/AOTW_logo_transparent.png' %}" alt="AOTW logo"></a>
           <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="sass.html">Register</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
             <li><a href="{% url 'login' %}">Login</a></li>
             <li><a href="{% url 'search'%}"><i class="material-icons right">search</i>Search</a></li>                  
           </ul>
