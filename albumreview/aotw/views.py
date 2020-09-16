@@ -6,8 +6,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.core.paginator import Paginator
+from random import randrange
+from collections import OrderedDict 
 
-from .models import User, Album, Nomination, Review, ReviewForm
+from .models import User, Album, Nomination, Review
+from .forms import ReviewForm, AlbumForm
 
 import requests
 
@@ -67,75 +70,73 @@ def search(request):
     if request.method == "POST":
         search_type = request.POST["search-option"]
         query = request.POST["search"]
+
         return HttpResponseRedirect(reverse("albumsearch", args=[search_type, query]))
                
     return render(request, "aotw/search.html")
 
 
 def albumsearch(request, search_type, query):
-    if request.method == "POST":
-        search_type = request.POST["search-option"]
-        query = request.POST["search"]
-        return HttpResponseRedirect(reverse("albumsearch", args=[search_type, query]))        
-    else:
-        albums = {}
-        if search_type == '1':
-            response = requests.get('https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?s=%s' % query)
-            response = response.json()
-            albums = response['album']
-        
-        elif search_type == '2':
-            response = requests.get('https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?a=%s' % query)
-            response = response.json()
-            albums = response['album']
-        
-        if albums: 
-            paginator = Paginator(albums, 9) 
-            page_number = request.GET.get('page')
-            page_obj = paginator.get_page(page_number)            
-        
-            return render(request, "aotw/searchresults.html", {
-                    'results': len(albums),
-                    'albums': albums,
-                    'page_obj': page_obj})
-        else: 
-            return render(request, "aotw/searchresults.html", {
-                'albums': albums})
+    albums = []
+    if search_type == '1':
+        albums = Album.objects.filter(strArtist__iexact=query, custom=True)
+        albums = list(albums)
+        response = requests.get('https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?s=%s' % query)
+        response = response.json()
+        if response['album'] != None:
+            albums += response['album']            
+                    
+    elif search_type == '2':
+        albums = Album.objects.filter(strAlbum__iexact=query, custom=True)
+        albums = list(albums)
+        response = requests.get('https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?a=%s' % query)
+        response = response.json()
+        if response['album'] != None: 
+            albums += response['album']            
+
+    if albums: 
+        paginator = Paginator(albums, 9) 
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)            
+     
+        return render(request, "aotw/searchresults.html", {
+            'results': len(albums),
+            'albums': albums,
+            'page_obj': page_obj})
+
+    else: 
+        return render(request, "aotw/searchresults.html", {
+            'albums': albums})
 
 
 def album(request, album_id):
+    
     ## if album in database, read from db
     try:
-        album = Album.objects.get(audioDB_albumID=album_id)
+        album = Album.objects.get(idAlbum=album_id)
         score = album.score
+        reviews = Review.objects.filter(album=album.id)
         ## check if nominated
         try: 
             nomination = Nomination.objects.get(album=album.id)
         except Nomination.DoesNotExist:
-            nomination = None
-
-        try:
-            reviews = Review.objects.filter(album=album.id)
-        except Review.DoesNotExist: 
-            reviews = None
-
-        return render(request, "aotw/nominatedalbum.html", {
-        "album": album,
-        "nomination": nomination,
-        "reviews": reviews,
-        "score": score
-        })       
+            nomination = None       
+             
 
     except Album.DoesNotExist:
         ## if album NOT in database, get from API
         response = requests.get('https://theaudiodb.com/api/v1/json/1/album.php?m=%s' % album_id)
         response = response.json()
-        album = response['album']
+        album = response['album'][0]
+        score = None
+        reviews = None
         nomination = None
 
     return render(request, "aotw/album.html", {
-        "album": album,
-        "nomination": nomination
+        "a": album,
+        "nomination": nomination,
+        "reviews": reviews,
+        "score": score
         })     
 
 
@@ -147,25 +148,25 @@ def artist(request, artist_id):
 
     return render(request, "aotw/artist.html", {"artists": artists})
 
-@login_required
-def nominate(request, album_id):
+
+def nominate(user, album_id):
     ## check if album in db
-    ## if yes
-    checkalb = Album.objects.filter(audioDB_albumID=album_id)
-    if checkalb.count() > 0:
-        # check for nomination
-        nom = Nomination.objects.filter(album=checkalb, user=request.user)
-        if nom.count() > 0:
-            return HttpResponseRedirect(reverse("nominations"))
+    try:
+        checkalb = Album.objects.get(idAlbum=album_id)
+
+        try:
+            nom = Nomination.objects.get(album=checkalb)
+        
         #  add nomination
-        else: 
+        except Nomination.DoesNotExist:        
             nom = Nomination()
             nom.album = checkalb
-            nom.user = request.user
-            nom.save()
+            nom.user = user
+            nom.save()           
+                
 
-    ## if not,
-    else: 
+    ## if album not in db:
+    except Album.DoesNotExist: 
         # get album info
         response = requests.get('https://theaudiodb.com/api/v1/json/1/album.php?m=%s' % album_id)
         response = response.json()
@@ -174,54 +175,84 @@ def nominate(request, album_id):
         # save to DB 
         for a in album:
             newalb = Album()
-            newalb.audioDB_albumID = album_id
-            newalb.title = a['strAlbum']
+            newalb.idAlbum = album_id
+            newalb.strAlbum = a['strAlbum']
             try:
-                newalb.description = a['strDescriptionEN']
+                newalb.strDescriptionEN = a['strDescriptionEN']
             except KeyError:
-                newalb.description = ''
-            newalb.artist = a['strArtist']
-            newalb.audioDB_artistID = a['idArtist']
+                newalb.strDescriptionEN = ''
+            newalb.strArtist = a['strArtist']
+            newalb.idArtist = a['idArtist']
             if a['strAlbumThumb']:
-                newalb.album_art = a['strAlbumThumb']
+                newalb.strAlbumThumb = a['strAlbumThumb']
             else:
-                newalb.album_art = ''
+                newalb.strAlbumThumb = ''
             if a['intYearReleased']:
-                newalb.year = a['intYearReleased']
+                newalb.intYearReleased = a['intYearReleased']
             else: 
-                newalb.year = ''
+                newalb.intYearReleased = ''
             if a['strLabel']:
-                newalb.label = a['strLabel']
+                newalb.strLabel = a['strLabel']
             else: 
-                newalb.label = ''
+                newalb.strLabel = ''
             if a['strGenre']:
-                newalb.genre = a['strGenre']
+                newalb.strGenre = a['strGenre']
             else:
-                newalb.genre = ''
+                newalb.strGenre = ''
             newalb.save()
     
         # add nomination
         nom = Nomination()
         nom.album = newalb
-        nom.user = request.user
-        nom.save()
-
-    return HttpResponseRedirect(reverse("nominations"))
-    
+        nom.user = user
+        nom.save()      
+        
+@login_required    
 def nominations(request):
     ## render all nominations
-    nominations = Nomination.objects.filter(aotw=False)
-    return render(request, "aotw/nominations.html", {
-        "nominations": nominations
+    user = request.user
+    if request.method == 'POST':
+        if 'remove' in request.POST:
+            album_id = request.POST["remove"]
+            album = Album.objects.get(id=album_id)
+            remove_nomination(user, album.id)
+
+            return HttpResponseRedirect(reverse("nominations"))
+
+        if 'newnom' in request.POST:
+            album_id = request.POST["newnom"]
+            nominate(user, album_id) 
+
+            return HttpResponseRedirect(reverse("nominations"))   
+    
+    else: 
+        nominations = Nomination.objects.filter(aotw=False)
+        return render(request, "aotw/nominations.html", {
+        "nominations": nominations,
+        "user": user
     })
+    return HttpResponseRedirect(reverse("nominations"))
+
+def remove_nomination(user, album_id):    
+    album = Album.objects.get(id=album_id)
+    nomination = Nomination.objects.filter(user=user, album=album).first()
+    nomination.delete()
+
 
 @login_required
 def profile(request, username):
     user = User.objects.get(username=username)
+    current_user = request.user
+    
+    if request.method == 'POST':
+        album_id = request.POST["remove"]
+        remove_nomination(current_user, album_id)
+    
     nominations = Nomination.objects.filter(user=user)
     reviews = Review.objects.filter(user=user)
     return render(request, "aotw/profile.html", {
         "user": user,
+        "current_user": current_user,
         "nominations": nominations,
         "reviews": reviews
     })
@@ -243,26 +274,35 @@ def adminpage(request):
         ## Past Nominations
         pastnoms = Nomination.objects.filter(aotw=True, active=False)
 
+        form = AlbumForm(request.POST or None)
+        if form.is_valid():
+            album = form.save(commit=False)
+            album.idAlbum = 999900000 + randrange(0, 100000, 1)
+            album.custom = True
+            album.save()
+            return HttpResponseRedirect(reverse("adminpage"))
         # Listen for promotion to AOTW
         if request.method == "POST":
+            if 'promote' in request.POST:
             # remove old active AOTW
-            if aotw:            
-                aotw.active = False
-                aotw.save()
+                if aotw:            
+                    aotw.active = False
+                    aotw.save()
 
             # promote new AOTW
-            new_aotw = request.POST["promote"]
-            new_aotw = Nomination.objects.get(album=new_aotw)
-            new_aotw.aotw = True
-            new_aotw.active = True
-            new_aotw.save()
+                new_aotw = request.POST["promote"]
+                new_aotw = Nomination.objects.get(album=new_aotw)
+                new_aotw.aotw = True
+                new_aotw.active = True
+                new_aotw.save()
 
-            return HttpResponseRedirect(reverse("adminpage"))
+                return HttpResponseRedirect(reverse("adminpage"))
 
         return render(request, "aotw/adminpage.html", {
             "aotw": aotw,
             "nominations": nominations,
             "pastnoms": pastnoms,
+            "form": form
         }) 
     else:
         return HttpResponseRedirect(reverse("index"))

@@ -40,7 +40,7 @@
             <p> Nominated by {{ nomination.user.username|title }} on {{ nomination.created_on }} </p>
             {% endif %}
         {% else %}
-        <a href="{% url 'nominate' a.idAlbum %}" class=""><i class="material-icons purple-text">stars</i> nominate</a>
+        <a href="" class=""><i class="material-icons purple-text">stars</i> nominate</a>
         {% endif %}
     </div>
 </section>
@@ -70,7 +70,7 @@
 
 <section class="row container center" id="album-description-section">
     <div class="col s12">
-        <p class="flow-text">{{ album.description }}</p>
+        <p class="flow-text">{{ album.strDescriptionEN }}</p>
     </div>
 </section>
 

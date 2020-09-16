@@ -8,7 +8,7 @@
     {% if aotw %}
     <section id="current" class="row">
         <h5>Album of the Week</h5>
-        <p>{{ aotw.album.title}} by {{ aotw.album.artist }}</p>
+        <p>{{ aotw.album }}</p>
         <p>{{ aotw.aotw_date }}</p>
 
     </section>
@@ -17,7 +17,7 @@
     <section id="upcoming" class="row">
         <ul>
         {% for nom in nominations %}
-            <li>{{ nom.album.title }} by {{ nom.album.artist }}
+            <li>{{ nom.album }}
                <br> Nominated by {{ nom.user|title }} on {{ nom.created_on }}
                <br> 
                <form action="" method="POST">
@@ -35,12 +35,23 @@
         <ul>
             <h5>Past AOTW's</h5>
             {% for pastnom in pastnoms %}
-                <li>{{ pastnom.album.title }} by {{ pastnom.album.artist }}
+                <li>{{ pastnom.album }}
                 </li>    
             {% empty %}
              <li>There are no past AOTW.</li>
             {% endfor %}
             </ul>
+    </section>
+
+    <section id="custom-nom" class="row">
+        <form action="{% url 'adminpage' %}" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <div class="input-field">            
+                <input id="custom-nom-submit" type="submit" class="btn" value="Save">       
+            </div>  
+            
+        </form>
     </section>
 
 </div>

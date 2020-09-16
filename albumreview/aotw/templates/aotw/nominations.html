@@ -5,7 +5,15 @@
 
 {% for nom in nominations %}
 
-    <h2>{{ nom.album.title }} by {{ nom.album.artist }}</h2>
+    <h2>{{ nom.album }}</h2>
+    {% if nom.aotw == False and nom.user == user %}
+        <form action="{% url 'nominations'%}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn" name="remove" value="{{ nom.album.id }}">Remove</button>        
+        </form>
+        
+        
+    {% endif %}
 
 {% empty %}
 

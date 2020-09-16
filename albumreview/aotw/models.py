@@ -3,26 +3,26 @@ from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.forms import ModelForm
 
 
 class User(AbstractUser):
     pass
 
 class Album(models.Model):
-    audioDB_albumID = models.PositiveIntegerField(blank=True, unique=True)
-    title = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
-    artist = models.CharField(max_length=100)
-    audioDB_artistID = models.PositiveIntegerField(blank=True, unique=True)
-    album_art = models.URLField(blank=True)
-    year = models.PositiveSmallIntegerField(blank=True)
-    label = models.CharField(max_length=100, blank=True)
-    genre = models.CharField(max_length=100, blank=True)
+    idAlbum = models.PositiveIntegerField(blank=True, unique=True)
+    strAlbum = models.CharField(max_length=200)
+    strDescriptionEN = models.TextField(blank=True)
+    strArtist = models.CharField(max_length=100)
+    idArtist = models.PositiveIntegerField(blank=True, null=True)
+    strAlbumThumb = models.URLField(blank=True)
+    intYearReleased = models.PositiveSmallIntegerField(blank=True)
+    strLabel = models.CharField(max_length=100, blank=True)
+    strGenre = models.CharField(max_length=100, blank=True)
     score = models.SmallIntegerField(blank=True, null=True)
+    custom = models.BooleanField(default=False)
 
     def __str__(self):
-        return(f'{self.title} by {self.artist}')
+        return(f'{self.strAlbum} by {self.strArtist}')
     
 class Nomination(models.Model):
     album = models.OneToOneField(Album, on_delete=models.CASCADE)
@@ -43,7 +43,7 @@ class Nomination(models.Model):
         super(Nomination, self).save(*args, **kwargs)
 
     def __str__(self):
-        return(f'{self.album.title} nominated by {self.user}')
+        return(f'{self.album.strAlbum} nominated by {self.user}')
 
 class Review(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
@@ -55,9 +55,4 @@ class Review(models.Model):
             MaxValueValidator(5),
             MinValueValidator(-5)
         ])
-
-class ReviewForm(ModelForm):
-    class Meta:
-        model = Review
-        exclude = ['user', 'created_on']
 

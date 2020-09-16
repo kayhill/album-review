@@ -28,8 +28,13 @@
   <div class="album-info center">
     <a href="{% url 'album' album.idAlbum %}"><p class="album-title flow-text">{{ album.strAlbum }}</p></a>
     <a href="{% url 'artist' album.idArtist %}"><p class="album-artist flow-text">{{ album.strArtist }}</p></a>
+    
     <div class="album-btns-small container">
-      <a class="hover-btn"><i class="material-icons purple-text">stars</i> nominate</a>
+      <form action="{% url 'nominations' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="hover-btn" name="newnom" value="{{ album.idAlbum }}"><i class="material-icons purple-text">stars</i>Nominate</button>        
+      </form>
+
       <a class="hover-btn" href="{% url 'album' album.idAlbum %}"><i class="material-icons blue-text">music_note</i> view</a>
     </div>
   </div>

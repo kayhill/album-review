@@ -81,7 +81,7 @@
 <section id="past-aow" class="container">
     <h4>Past AOTWs</h4>
     {% for pastnom in pastnoms %}
-        <a href="{% url 'album' pastnom.album.audioDB_albumID %}"><p>{{ pastnom.album }}</p></a>
+        <a href="{% url 'album' pastnom.album.idAlbum %}"><p>{{ pastnom.album }}</p></a>
 
     {% endfor %}
 </section>

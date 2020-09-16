@@ -3,11 +3,19 @@
 
 {% block body %}
 
-{% for a in album %} 
+
 <section id="album-header" class="row container center">
     <div class="col s12 m6 l6 center">
         <h2>{{ a.strAlbum }}</h2>
-        <h4 class="album-artist">by <a href="{% url 'artist' a.idArtist %}">{{ a.strArtist }}</a></h4>
+        <h4 class="album-artist">by 
+            
+            {% if a.artistID %}
+            <a href="{% url 'artist' a.idArtist %}">{{ a.strArtist }}</a>
+            {% else %}
+            {{ a.strArtist}}
+            {% endif %}
+        
+        </h4>
     </div>
 
     <div class="col s12 m6 l6 center">
@@ -38,10 +46,16 @@
             {% if nomination.aotw == True %}
             <p> Past AOTW </p>
             {% else %}
+
             <p> Nominated by {{ nomination.user.username|title }} on {{ nomination.created_on }} </p>
+            
             {% endif %}
         {% else %}
-        <a href="{% url 'nominate' a.idAlbum %}" class=""><i class="material-icons purple-text">stars</i> nominate</a>
+        <form action="{% url 'nominations' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn" name="newnom" value="{{ a.idAlbum }}"><i class="material-icons purple-text">stars</i>Nominate</button>        
+        </form>
+        
         {% endif %}
     </div>
 </section>
@@ -51,7 +65,7 @@
         <p class="flow-text">{{ a.strDescriptionEN }}</p>
     </div>
 </section>
-{% endfor %}
+
 
 
 

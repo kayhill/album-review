@@ -10,14 +10,20 @@
 <h5> Nominations </h5>
     <ul>
     {% for nom in nominations %}
-        <li>{{ nom.album.title }}</li>
+        <li>{{ nom.album }}</li>
+        {% if user == nom.user and nom.aotw == False %}
+        <form action="{% url 'profile' current_user %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn" name="remove" value="{{ nom.album.id }}">Remove</button>        
+        </form>
+        {% endif %}
     {% endfor %}
     </ul>
 
 <h5> Reviews </h5>
     <ul>
     {% for review in reviews %}
-        <li>{{ review.album.title }} rated {{ review.rating }}</li>
+        <li>{{ review.album }} rated {{ review.rating }}</li>
     {% endfor %}
     </ul>
 
