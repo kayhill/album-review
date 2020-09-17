@@ -14,7 +14,7 @@
 <body>
     <nav>
         <div class="nav-wrapper">
-          <a href="{% url 'home'%}" class="brand-logo"><img src="{% static '/aotw/media/AOTW_logo_transparent.png' %}" alt="AOTW logo"></a>
+          <a href="{% url 'home'%}" class="brand-logo"><img src="{% static '/aotw/media/aotw-logo-noguitar.png' %}" alt="AOTW logo"></a>
           <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
           {% if user.is_authenticated %}
           <ul id="nav-mobile" class="right hide-on-med-and-down">          
@@ -56,3 +56,4 @@
     <script src="{% static 'aotw/app.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
+

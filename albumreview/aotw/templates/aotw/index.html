@@ -1,4 +1,5 @@
 {% extends "aotw/layout.html" %}
+{% load static %}
 
 {% block body %}
 
@@ -7,6 +8,21 @@
     <span>You're logged in as group leader. <a href="{% url 'adminpage' %}"> Visit the admin page.</a></span>
 </section>
 {% endif %}
+
+<section id="splash" class="row">
+    <div class="col s12 m12 l6 center">
+        <div class="home-img container">
+            <img id="record" src="https://media.giphy.com/media/nLw0pYqJ1G9kFDJg4P/source.gif">
+        </div>
+    </div>
+    <div class="col s12 m12 l5 center">
+        <div class="splash-text">
+            <img id="aotw-heading" src="{% static '/aotw/media/aotw-expanded.png' %}" alt="Album of the Week Title">        
+            <p class="flow-text">share and review albums with friends</p>
+            <button class="btn">What's Spinning?</button>
+        </div>
+    </div>
+</section>
 
 <section id="aotw_home" class="container">
     <h2>Album of the Week</h2>

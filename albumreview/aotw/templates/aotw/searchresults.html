@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block body %}
+<div id="search-results-page">
 
 
 {% if results %}
@@ -32,7 +33,7 @@
     <div class="album-btns-small container">
       <form action="{% url 'nominations' %}" method="POST">
         {% csrf_token %}
-        <button type="submit" class="hover-btn" name="newnom" value="{{ album.idAlbum }}"><i class="material-icons purple-text">stars</i>Nominate</button>        
+        <button type="submit" name="newnom" value="{{ album.idAlbum }}"><i class="material-icons purple-text">stars</i><a class="hover-btn">nominate</a></button>        
       </form>
 
       <a class="hover-btn" href="{% url 'album' album.idAlbum %}"><i class="material-icons blue-text">music_note</i> view</a>
@@ -146,5 +147,5 @@
 -->
 
 <script src="{% static 'aotw/search.js' %}"></script>
-
+</div>
 {% endblock %}

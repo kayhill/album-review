@@ -3,27 +3,39 @@
 
 body {
     font-size: 16px;
-    background-color: ghostwhite;
-    color: #0d0222;
+    background-color: #020304;
+    background-image: url('./media/lubo-minar-qRGuuVOzsTc-unsplash.jpg');
+    background-size: contain;
+    color: whitesmoke;
     font-family: 'Roboto Condensed', sans-serif;    
 }
 
+#search-results-page {
+    background-image: url('./media/search_results_wengang-zhai-CK3j0e9oV18-unsplash.jpg');
+    background-size: contain;
+}
+button {
+    background-color: transparent;
+    border: none;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
 .btn {
-    background-color: #f752e0;
+    background-color: #ff85ea;
     color: white;
     margin-top: 30px;
     margin-bottom: 30px;
 }
 .btn:hover {
-    background-color: #ff85ea;
+    background-color: #f752e0;
 }
 
 a {
-    color:#0c0122;
+    color:whitesmoke;
 }
 
-a:hover {
-    color: #039be5;
+nav ul a:hover {
+    text-transform: uppercase;
 }
 
 .hover-btn:hover {
@@ -64,13 +76,14 @@ select {
 }
 /* nav bar */
 nav img {
-    height:80px;
+    height:40px;
+    margin-top:10px;
 }
 
 nav {
-    background-color: black;
-    height: 90px;
-    line-height: 90px;
+    background-color: #090e13c0;
+    height: 60px;
+    line-height: 50px;
     color: rgb(253, 255, 247);
 }
 
@@ -79,7 +92,7 @@ nav i {
 }
 
 .sidenav {
-    background-color: #f3c9f5;
+    background-color: #2e0f30;
     color: rgb(253, 255, 247);
 }
 
@@ -93,16 +106,37 @@ nav i {
     font-weight: 400;
 }
 
+/*splash*/
+#splash {
+    height: 100vh;
+    padding-top: 20px;
+}
+
+#record {
+    margin-top: 30px;
+    height: 40vh;
+}
+
+.splash-text {
+    margin-top: 30px;
+    font-style: italic;
+}
+
+#aotw-heading {
+    width: 80vw;
+}
+
 /* search  */
 
 #search-submit {
     margin-top: 0px;
 }
 #search-bar {
-    margin-top: 50px;
-    background-color: ghostwhite;
-    background-size: cover;
-    background-repeat: no-repeat;
+    margin: 50px;
+    padding-top:50px;
+    padding-bottom: 50px;
+    background-color: #090e13bd;
+
 }
 
 #search-bar h3 {
@@ -111,6 +145,7 @@ nav i {
 }
 .album-btns-small {
     margin-top: 20px;
+    margin-bottom:10px;
     display: flex;
     justify-content: space-evenly;
 }
@@ -128,6 +163,10 @@ nav i {
 }
 .album-art img {
     height: 200px;    
+}
+
+.album-art img:hover{
+    height: 210px;    
 }
 
 .album-info {
@@ -148,6 +187,10 @@ nav i {
     background-image: url("./media/background_gradient.png");
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+.album-btns-small a.hover{
+    text-transform: none;
 }
 
 /* Album View */
@@ -186,8 +229,18 @@ nav i {
         margin-top: 50px;
         margin-bottom: 50px;
     }   
+
     #band-image {
         max-width: 40vw;
     }
-
+    #aotw-heading {
+        width: 40vw;
+    }
+    
+    #record {
+        height: 60vh;
+    }
+    .splash-text {
+        margin-top: 60px;
+    }
 }
