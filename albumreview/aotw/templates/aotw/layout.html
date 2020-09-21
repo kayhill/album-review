@@ -17,14 +17,14 @@
           <a href="{% url 'home'%}" class="brand-logo"><img src="{% static '/aotw/media/aotw-logo-noguitar.png' %}" alt="AOTW logo"></a>
           <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
           {% if user.is_authenticated %}
-          <ul id="nav-mobile" class="right hide-on-med-and-down">          
+          <ul id="nav-mobile" class="right hide-on-med-and-down flow-text">          
             <li><a href="{% url 'profile' user.username %}">My Profile</a></li>
-            <li><a href="{% url 'nominations' %}">Nominations</a></li>
-            <li><a href="{% url 'search'%}"><i class="material-icons right">search</i>Search</a></li> 
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'nominations' %}">Upcoming</a></li>
+            <li><a href="{% url 'search'%}"><i class="material-icons right">search</i>Nominate</a></li> 
+    
           </ul>
           {% else %}
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <ul id="nav-mobile" class="right flow-text hide-on-med-and-down">
             <li><a href="{% url 'register' %}">Register</a></li>
             <li><a href="{% url 'login' %}">Login</a></li>
             <li><a href="{% url 'search'%}"><i class="material-icons right">search</i>Search</a></li>                  
@@ -34,14 +34,14 @@
       </nav>
 
       {% if user.is_authenticated %}
-      <ul class="sidenav" id="mobile-demo">
+      <ul class="sidenav flow-text" id="mobile-demo">
         <li><a href="{% url 'profile' user.username %}">My Profile</a></li>
-            <li><a href="{% url 'nominations' %}">Nominations</a></li>
-            <li><a href="{% url 'search'%}"><i class="material-icons right">search</i>Search</a></li> 
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'nominations' %}">Upcoming</a></li>
+            <li><a href="{% url 'search'%}"><i class="material-icons right">search</i>Nominate</a></li> 
+            
       </ul>
       {% else %}
-      <ul class="sidenav" id="mobile-demo">
+      <ul class="sidenav flow-text" id="mobile-demo">
         <li><a href="{% url 'register' %}">Register</a></li>
         <li><a href="{% url 'login' %}">Login</a></li>
         <li><a href="{% url 'search'%}"><i class="material-icons left">search</i>Search</a></li>              
@@ -53,7 +53,8 @@
 
     {% endblock %}
    
-    <script src="{% static 'aotw/app.js' %}"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{% static 'aotw/app.js' %}"></script>
 </body>
 

@@ -19,12 +19,12 @@
         <div class="splash-text">
             <img id="aotw-heading" src="{% static '/aotw/media/aotw-expanded.png' %}" alt="Album of the Week Title">        
             <p class="flow-text">share and review albums with friends</p>
-            <button class="btn">What's Spinning?</button>
+            <a href="#aotw_home"><button class="btn waves-effect waves-light">What's Spinning?</button></a>
         </div>
     </div>
 </section>
 
-<section id="aotw_home" class="container">
+<section id="aotw_home" class="container section scrollspy">
     <h2>Album of the Week</h2>
     {% if aotw %}
         <h5>{{ aotw.album }} </h5>
@@ -96,10 +96,11 @@
 
 <section id="past-aow" class="container">
     <h4>Past AOTWs</h4>
-    {% for pastnom in pastnoms %}
-        <a href="{% url 'album' pastnom.album.idAlbum %}"><p>{{ pastnom.album }}</p></a>
-
-    {% endfor %}
+    <div class="carousel">
+        {% for pastnom in pastnoms %}
+        <a class="carousel-item" href="{% url 'album' pastnom.album.idAlbum %}"><img src="{{ pastnom.album.strAlbumThumb }}"></a>        
+        {% endfor %}
+    </div>
 </section>
 
 <section id="upcoming-aow" class="container">

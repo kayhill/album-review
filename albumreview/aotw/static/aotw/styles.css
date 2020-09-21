@@ -14,20 +14,21 @@ body {
     background-image: url('./media/search_results_wengang-zhai-CK3j0e9oV18-unsplash.jpg');
     background-size: contain;
 }
+
 button {
     background-color: transparent;
     border: none;
     font-family: 'Roboto Condensed', sans-serif;
 }
 
-.btn {
+.btn{
     background-color: #ff85ea;
     color: white;
     margin-top: 30px;
     margin-bottom: 30px;
 }
-.btn:hover {
-    background-color: #f752e0;
+.btn:hover, .btn:focus {
+    background-color: #f752e0 ;
 }
 
 a {
@@ -83,12 +84,16 @@ nav img {
 nav {
     background-color: #090e13c0;
     height: 60px;
-    line-height: 50px;
     color: rgb(253, 255, 247);
 }
 
 nav i {
     color:#ffd6f8;
+
+}
+
+#nav-mobile {
+    padding-top: 10px;
 }
 
 .sidenav {
@@ -126,6 +131,15 @@ nav i {
     width: 80vw;
 }
 
+/* home - past albums  */
+
+/* bug in opacity styling when items < display number (default =5)
+
+.carousel-item {
+  opacity: 1 !important;
+}
+*/
+
 /* search  */
 
 #search-submit {
@@ -161,6 +175,7 @@ nav i {
 .album-art {
     height: 200px;
 }
+
 .album-art img {
     height: 200px;    
 }

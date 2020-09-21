@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var select = document.querySelector('select');
   M.FormSelect.init(select);
 
+
   document.getElementById('custom-nom').addEventListener('click', () => loadNomForm());
 });
 
