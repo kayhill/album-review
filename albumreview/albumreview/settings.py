@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'aotw',
     'rest_framework',
+    'avatar'
 ]
 
 MIDDLEWARE = [

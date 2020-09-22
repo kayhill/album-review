@@ -12,3 +12,5 @@ urllib3==1.25.10
 regex==2020.7.14
 titlecase==1.1.1
 Pillow==7.2.0
+django-appconf==1.0.4
+django-avatar==5.0.0

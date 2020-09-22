@@ -7,8 +7,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.core.paginator import Paginator
 
-from .models import User, Album, Nomination, Review, UserProfile
-from .forms import ReviewForm, AlbumForm, UserProfileForm
+from .models import User, Album, Nomination, Review
+from .forms import ReviewForm, AlbumForm
 from .methods import addalbum, nominate, remove_nomination
 
 import requests
