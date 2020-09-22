@@ -6,17 +6,17 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.core.paginator import Paginator
-from random import randrange
-from collections import OrderedDict 
 
-from .models import User, Album, Nomination, Review
-from .forms import ReviewForm, AlbumForm
+from .models import User, Album, Nomination, Review, UserProfile
+from .forms import ReviewForm, AlbumForm, UserProfileForm
+from .methods import addalbum, nominate, remove_nomination
 
 import requests
 
 
 def index(request):
     user = request.user
+    can_review = True
      # Get current AOTW
     try:
         aotw = Nomination.objects.get(active=True)
@@ -48,6 +48,15 @@ def index(request):
             album.score = score
             album.save()       
     # Review Form
+        
+        if user.is_authenticated:
+            try:
+                reviews.get(user=user)
+            except NameError:
+                can_review = True
+            else:
+                can_review = False
+
         form = ReviewForm(request.POST or None)
         if form.is_valid():
             review = form.save(commit=False)
@@ -60,6 +69,7 @@ def index(request):
         "nominations": nominations,
         "pastnoms": pastnoms,
         "form": form, 
+        "can_review": can_review,
         "reviews": reviews,
         "score": score, 
         "leader": leader
@@ -74,9 +84,16 @@ def search(request):
         return HttpResponseRedirect(reverse("albumsearch", args=[search_type, query]))
                
     return render(request, "aotw/search.html")
-
-
+  
+    
 def albumsearch(request, search_type, query):
+    message = ""
+    form = AlbumForm(request.POST or None)
+    if form.is_valid():
+        album = form.save(commit=False)
+        addalbum(album)
+        message = "Album saved!"
+
     albums = []
     if search_type == '1':
         albums = Album.objects.filter(strArtist__iexact=query, custom=True)
@@ -97,16 +114,19 @@ def albumsearch(request, search_type, query):
     if albums: 
         paginator = Paginator(albums, 9) 
         page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)            
+        page_obj = paginator.get_page(page_number)                
      
         return render(request, "aotw/searchresults.html", {
             'results': len(albums),
             'albums': albums,
-            'page_obj': page_obj})
+            'page_obj': page_obj, 
+            'form': form,
+            'message': message })
 
     else: 
         return render(request, "aotw/searchresults.html", {
-            'albums': albums})
+            'albums': albums,
+             'form': form})
 
 
 def album(request, album_id):
@@ -148,65 +168,7 @@ def artist(request, artist_id):
 
     return render(request, "aotw/artist.html", {"artists": artists})
 
-
-def nominate(user, album_id):
-    ## check if album in db
-    try:
-        checkalb = Album.objects.get(idAlbum=album_id)
-
-        try:
-            nom = Nomination.objects.get(album=checkalb)
-        
-        #  add nomination
-        except Nomination.DoesNotExist:        
-            nom = Nomination()
-            nom.album = checkalb
-            nom.user = user
-            nom.save()           
-                
-
-    ## if album not in db:
-    except Album.DoesNotExist: 
-        # get album info
-        response = requests.get('https://theaudiodb.com/api/v1/json/1/album.php?m=%s' % album_id)
-        response = response.json()
-        album = response['album']
-        
-        # save to DB 
-        for a in album:
-            newalb = Album()
-            newalb.idAlbum = album_id
-            newalb.strAlbum = a['strAlbum']
-            try:
-                newalb.strDescriptionEN = a['strDescriptionEN']
-            except KeyError:
-                newalb.strDescriptionEN = ''
-            newalb.strArtist = a['strArtist']
-            newalb.idArtist = a['idArtist']
-            if a['strAlbumThumb']:
-                newalb.strAlbumThumb = a['strAlbumThumb']
-            else:
-                newalb.strAlbumThumb = ''
-            if a['intYearReleased']:
-                newalb.intYearReleased = a['intYearReleased']
-            else: 
-                newalb.intYearReleased = ''
-            if a['strLabel']:
-                newalb.strLabel = a['strLabel']
-            else: 
-                newalb.strLabel = ''
-            if a['strGenre']:
-                newalb.strGenre = a['strGenre']
-            else:
-                newalb.strGenre = ''
-            newalb.save()
-    
-        # add nomination
-        nom = Nomination()
-        nom.album = newalb
-        nom.user = user
-        nom.save()      
-        
+       
 @login_required    
 def nominations(request):
     ## render all nominations
@@ -233,16 +195,17 @@ def nominations(request):
     })
     return HttpResponseRedirect(reverse("nominations"))
 
-def remove_nomination(user, album_id):    
-    album = Album.objects.get(id=album_id)
-    nomination = Nomination.objects.filter(user=user, album=album).first()
-    nomination.delete()
-
 
 @login_required
 def profile(request, username):
     user = User.objects.get(username=username)
     current_user = request.user
+    
+    form = UserProfileForm(request.POST or None)
+    if form.is_valid():
+        pic = form.save(commit=False)
+        pic.user = current_user
+        pic.save()
     
     if request.method == 'POST':
         album_id = request.POST["remove"]
@@ -254,8 +217,11 @@ def profile(request, username):
         "user": user,
         "current_user": current_user,
         "nominations": nominations,
-        "reviews": reviews
+        "reviews": reviews,
+        "form": form
     })
+
+
 
 
 @login_required
@@ -274,13 +240,13 @@ def adminpage(request):
         ## Past Nominations
         pastnoms = Nomination.objects.filter(aotw=True, active=False)
 
+        # Custom Nomination form
         form = AlbumForm(request.POST or None)
         if form.is_valid():
             album = form.save(commit=False)
-            album.idAlbum = 999900000 + randrange(0, 100000, 1)
-            album.custom = True
-            album.save()
+            addalbum(album)
             return HttpResponseRedirect(reverse("adminpage"))
+
         # Listen for promotion to AOTW
         if request.method == "POST":
             if 'promote' in request.POST:

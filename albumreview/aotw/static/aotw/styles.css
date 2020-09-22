@@ -10,10 +10,6 @@ body {
     font-family: 'Roboto Condensed', sans-serif;    
 }
 
-#search-results-page {
-    background-image: url('./media/search_results_wengang-zhai-CK3j0e9oV18-unsplash.jpg');
-    background-size: contain;
-}
 
 button {
     background-color: transparent;
@@ -27,6 +23,7 @@ button {
     margin-top: 30px;
     margin-bottom: 30px;
 }
+
 .btn:hover, .btn:focus {
     background-color: #f752e0 ;
 }
@@ -61,6 +58,11 @@ p {
     height: 100px;
 }
 
+textarea {
+    background-color: whitesmoke;
+    height: 8rem;
+}
+
 input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
     background-color: white;
     border-bottom: none;
@@ -68,13 +70,15 @@ input:not([type]), input[type=text]:not(.browser-default), input[type=password]:
 }
 
 .input-field>label {
-    color: #ff85ea;
+    color: #f752e0;
+    pointer-events: all!important;
 }
 
 select {
     background-color: white;
     color: #ff85ea;
 }
+
 /* nav bar */
 nav img {
     height:40px;
@@ -139,6 +143,14 @@ nav i {
   opacity: 1 !important;
 }
 */
+
+/* home - reviews */
+
+.user_review {    
+    border-color: #e60ac1;
+    border-style: solid;
+}
+
 
 /* search  */
 

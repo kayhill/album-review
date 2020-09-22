@@ -9,3 +9,6 @@ djangorestframework==3.11.1
 idna==2.10
 requests==2.24.0
 urllib3==1.25.10
+regex==2020.7.14
+titlecase==1.1.1
+Pillow==7.2.0

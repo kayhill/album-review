@@ -8,6 +8,10 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class User(AbstractUser):
     pass
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(blank=True, null=True)
+
 class Album(models.Model):
     idAlbum = models.PositiveIntegerField(blank=True, unique=True)
     strAlbum = models.CharField(max_length=200)

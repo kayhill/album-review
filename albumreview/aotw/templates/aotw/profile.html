@@ -4,7 +4,18 @@
 {% block body %}
 
 {% if user == current_user %}
-<a href="{% url 'logout' %}"><button class="btn">Log Out</button></a>
+<div class="row">
+    <a href="{% url 'logout' %}"><button class="btn">Log Out</button></a>
+</div>
+
+<div class="row">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.avatar }}
+        <button type="submit" class="btn" name="upload-pic" value="">Upload</button>        
+    </form>
+</div>
+
 {% endif %}
 
 <h3>{{ user.username|title }}</h3>

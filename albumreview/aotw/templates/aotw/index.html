@@ -35,6 +35,7 @@
 </section>
 
 {% if user.is_authenticated %}
+{% if can_review == True %}
 <section id="add_review" class="container">
     <h2>Add New Review</h2>
     <div class="row">
@@ -42,16 +43,16 @@
         {% csrf_token %}
         <input type="select" name="album" id="album" value="{{ aotw.album.id }}" style="visibility: hidden;">
         <div class="row">
-            <div class="input-field col s6">                
+            <div class="input-field col s12 m8 l6">                
                 <p class="range-field">
-                    <label for="rating">Rate It</label>
+                    <label for="rating">Rate It!</label>
                     <input type="range" name="rating" id="rating" min="-5" max="5" />
                 </p>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <label for="review_text">What did you think?</label>
+                <label for="review_text">What did you think?</label>4 
                 {{ form.review_text }}
             </div>
         </div>
@@ -71,15 +72,22 @@
     </div>
     
 </section>
+{% endif %}
 
 <section id="aotw_reviews" class="container">
     <h2>Community Reviews</h2>
     {% if reviews %}
         {% for review in reviews %}
-        <h5>{{ review.rating }} </h5>
-        <span>by {{ review.user|title }}</span>
-        <p>{{ review.review_text }} </p>
-        <p>Top Tracks: {{ review.top_tracks }}</p>
+        {% if review.user == user %}
+        <div class="user_review">
+        {% else %}
+        <div class="">
+        {% endif %}
+            <h5>{{ review.rating }} </h5>       
+            <span>by {{ review.user|title }}</span>
+            <p>{{ review.review_text }} </p>
+            <p>Top Tracks: {{ review.top_tracks }}</p>
+        </div>
         {% endfor %}
     {% else %}
         <p>Be the first to review this album!</p>
@@ -88,7 +96,7 @@
 
 {% else %}
 <div class="container">
-    <p> What are the people saying!? Log in to read reviews and add your own. </p>
+    <p class="flow-text"> What are the people saying!? Log in to read reviews and add your own. </p>
 </div>
 
 {% endif %}

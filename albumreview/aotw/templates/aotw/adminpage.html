@@ -43,15 +43,50 @@
             </ul>
     </section>
 
-    <section id="custom-nom" class="row">
-        <form action="{% url 'adminpage' %}" method="POST">
+    <section id="custom-nom">
+        <div class="row">
+        <form action="{% url 'addalbum' %}" method="POST">
             {% csrf_token %}
-            {{ form }}
-            <div class="input-field">            
-                <input id="custom-nom-submit" type="submit" class="btn" value="Save">       
-            </div>  
+            <div class="input-field col s12">
+                <label for="id_strAlbum">Album Title</label>
+                {{ form.strAlbum }}
+            </div>
+
+            <div class="input-field col s12">
+                <label for="id_strArtist">Artist</label>
+                {{ form.strArtist }}
+            </div>
             
+            <div class="input-field col s12">
+                <label class="active" for="id_strDescriptionEN">Album Description</label>
+                {{ form.strDescriptionEN }}
+            </div>
+
+            <div class="input-field col s12">
+                <label for="id_strAlbumThumb">Album Image URL</label>
+                {{ form.strAlbumThumb }}
+            </div>
+
+            <div class="input-field col s12">
+                <label for="id_intYearReleased">Release Year</label>
+                {{ form.intYearReleased }}
+            </div>
+            
+            <div class="input-field col s12">
+                <label for="id_strLabel">Label</label>
+                {{ form.strLabel}}
+            </div>
+
+            <div class="input-field col s12">
+                <label for="strGenre">Genre</label>
+                {{ form.strGenre}}
+            </div>
+
+            <div class="center">            
+                <input id="custom-nom-submit" type="submit" class="btn" value="Save Album">       
+            </div>              
         </form>
+    </div>
     </section>
 
 </div>

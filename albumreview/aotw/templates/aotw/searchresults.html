@@ -4,6 +4,10 @@
 {% block body %}
 <div id="search-results-page">
 
+{% if message %}
+<p>{{ message }}</p>
+{% endif %}
+
 
 {% if results %}
 <h4>Your search returned {{ results }} results </h3>
@@ -81,7 +85,7 @@
   </div>
   <div class="container center row search">
 
-    <form id="search-query" action="{% url 'search' %}" method="POST">
+    <form id="search-query" action="" method="POST">
       {% csrf_token %}
       <div class="input-field col s6 m4 l4">
         <select class="browser-default" name="search-option" required>
@@ -103,7 +107,7 @@
   </div>
 </section>
 
-<!--
+
 <section id="no-result" class="container">
   <div class="container">
     <h4 class="center white-text">Didn't find what you were looking for?</h4>
@@ -117,34 +121,55 @@
       </div>
     </div>
   </div>
-
-
-
-
-<div id="nom-form" style="display:none">
-    <div class="row">
-      <form class="col s12" id="nomination-form">
-       <div class="row">
-          <div class="input-field col s8 offset-s2">
-            <input id="artist-nom" type="text" class="validate">
-            <label for="artist-nom">Artist</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s8 offset-s2">
-            <input id="album-nom" type="text" class="validate">
-            <label for="album-nom">Album Title</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field center">
-            <input id="submit-nom" type="submit" class="submit btn" value="Nominate!">            
-          </div>
-        </div>
-      </form>
-    </div>
 </section>
--->
+
+  <section id="nom-form" class="row" style="display:none">
+    <div class="container">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="input-field col s12">
+            <label for="id_strAlbum">Album Title</label>
+            {{ form.strAlbum }}
+        </div>
+
+        <div class="input-field col s12">
+            <label for="id_strArtist">Artist</label>
+            {{ form.strArtist }}
+        </div>
+        
+        <div class="input-field col s12">
+            <label for="id_strDescriptionEN">Album Description</label>
+            {{ form.strDescriptionEN }}
+        </div>
+
+        <div class="input-field col s12">
+            <label for="id_strAlbumThumb">Album Image URL</label>
+            {{ form.strAlbumThumb }}
+        </div>
+
+        <div class="input-field col s12">
+            <label for="id_intYearReleased">Release Year</label>
+            {{ form.intYearReleased }}
+        </div>
+        
+        <div class="input-field col s12">
+            <label for="id_strLabel">Label</label>
+            {{ form.strLabel}}
+        </div>
+
+        <div class="input-field col s12">
+            <label for="id_strGenre">Genre</label>
+            {{ form.strGenre}}
+        </div>
+
+        <div class="center">            
+            <input id="custom-nom-submit" type="submit" class="btn" value="Save Album">       
+        </div>              
+    </form>
+  </div> 
+</section>
+   
+
 
 <script src="{% static 'aotw/search.js' %}"></script>
 </div>
