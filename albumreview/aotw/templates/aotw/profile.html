@@ -1,5 +1,6 @@
 {% extends "aotw/layout.html" %}
 {% load static %}
+{% load avatar_tags %}
 
 {% block body %}
 
@@ -9,12 +10,13 @@
 </div>
 
 <div class="row">
-    
+    <a href="{% url 'avatar_change' %}">Change your avatar</a>  
 </div>
 
 {% endif %}
 
 <h3>{{ user.username|title }}</h3>
+{% avatar user %}
 
 <p>Joined: {{ user.date_joined }} </p>
 

@@ -201,12 +201,6 @@ def profile(request, username):
     user = User.objects.get(username=username)
     current_user = request.user
     
-    form = UserProfileForm(request.POST or None)
-    if form.is_valid():
-        pic = form.save(commit=False)
-        pic.user = current_user
-        pic.save()
-    
     if request.method == 'POST':
         album_id = request.POST["remove"]
         remove_nomination(current_user, album_id)
@@ -218,10 +212,7 @@ def profile(request, username):
         "current_user": current_user,
         "nominations": nominations,
         "reviews": reviews,
-        "form": form
     })
-
-
 
 
 @login_required
