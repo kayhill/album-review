@@ -50,12 +50,10 @@ def index(request):
     # Review Form
         
         if user.is_authenticated:
-            try:
-                reviews.get(user=user)
-            except NameError:
-                can_review = True
-            else:
+            if reviews.filter(user=user).first():
                 can_review = False
+            else:
+                can_review = True
 
         form = ReviewForm(request.POST or None)
         if form.is_valid():
@@ -181,7 +179,7 @@ def nominations(request):
 
             return HttpResponseRedirect(reverse("nominations"))
 
-        if 'newnom' in request.POST:
+        elif 'newnom' in request.POST:
             album_id = request.POST["newnom"]
             nominate(user, album_id) 
 

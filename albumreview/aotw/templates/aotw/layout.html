@@ -12,15 +12,17 @@
     <title>AOTW</title>
 </head>
 <body>
+  <div class="navbar-fixed">
     <nav>
         <div class="nav-wrapper">
           <a href="{% url 'home'%}" class="brand-logo"><img src="{% static '/aotw/media/aotw-logo-noguitar.png' %}" alt="AOTW logo"></a>
           <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
           {% if user.is_authenticated %}
           <ul id="nav-mobile" class="right hide-on-med-and-down flow-text">          
-            <li><a href="{% url 'profile' user.username %}">My Profile</a></li>
+            <li><a href="{% url 'profile' request.user %}">My Profile</a></li>
+            <li><a href="{% url 'nominations' %}">History</a></li>
             <li><a href="{% url 'nominations' %}">Upcoming</a></li>
-            <li><a href="{% url 'search'%}"><i class="material-icons right">search</i>Nominate</a></li> 
+            <li><a href="{% url 'search'%}"><i class="material-icons text-white right">search</i>Search</a></li> 
     
           </ul>
           {% else %}
@@ -32,21 +34,27 @@
           {% endif %}
         </div>
       </nav>
+    </div>
 
+      
       {% if user.is_authenticated %}
       <ul class="sidenav flow-text" id="mobile-demo">
-        <li><a href="{% url 'profile' user.username %}">My Profile</a></li>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'profile' request.user %}">My Profile</a></li>
             <li><a href="{% url 'nominations' %}">Upcoming</a></li>
-            <li><a href="{% url 'search'%}"><i class="material-icons right">search</i>Nominate</a></li> 
+            <li><a href="{% url 'nominations' %}">History</a></li>
+            <li><a href="{% url 'search'%}"><i class="material-icons text-white right">search</i>Search</a></li> 
             
       </ul>
       {% else %}
       <ul class="sidenav flow-text" id="mobile-demo">
+        <li><a href="{% url 'index' %}">Home</a></li>
         <li><a href="{% url 'register' %}">Register</a></li>
         <li><a href="{% url 'login' %}">Login</a></li>
         <li><a href="{% url 'search'%}"><i class="material-icons left">search</i>Search</a></li>              
       </ul>
       {% endif %}
+    
     </header>
     
     {% block body %}

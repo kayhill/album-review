@@ -4,14 +4,16 @@
 {% block body %}
 <div id="search-results-page">
 
+  
 {% if message %}
-<p>{{ message }}</p>
+  <div>{{ message }}</div>
 {% endif %}
 
-
+<div class="container">
 {% if results %}
 <h4>Your search returned {{ results }} results </h3>
 {% endif %}
+</div>
 
 
 <section id="search-results" class="row">

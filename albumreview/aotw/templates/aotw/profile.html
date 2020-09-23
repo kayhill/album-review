@@ -1,6 +1,6 @@
 {% extends "aotw/layout.html" %}
 {% load static %}
-{% load avatar_tags %}
+
 
 {% block body %}
 
@@ -8,15 +8,11 @@
 <div class="row">
     <a href="{% url 'logout' %}"><button class="btn">Log Out</button></a>
 </div>
-
-<div class="row">
-    <a href="{% url 'avatar_change' %}">Change your avatar</a>  
-</div>
-
 {% endif %}
 
+
 <h3>{{ user.username|title }}</h3>
-{% avatar user %}
+
 
 <p>Joined: {{ user.date_joined }} </p>
 
@@ -24,7 +20,7 @@
     <ul>
     {% for nom in nominations %}
         <li>{{ nom.album }}</li>
-        {% if user == nom.user and nom.aotw == False %}
+        {% if current_user == nom.user and nom.aotw == False %}
         <form action="{% url 'profile' current_user %}" method="POST">
             {% csrf_token %}
             <button type="submit" class="btn" name="remove" value="{{ nom.album.id }}">Remove</button>        

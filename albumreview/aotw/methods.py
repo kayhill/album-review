@@ -1,6 +1,7 @@
 from .models import User, Album, Nomination, Review
 from titlecase import titlecase
 
+import requests 
 
 def addalbum(album):
     album.strAlbum = titlecase(album.strAlbum)

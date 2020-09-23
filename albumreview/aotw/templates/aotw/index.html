@@ -5,54 +5,75 @@
 
 {% if leader == True %}
 <section id="admin-banner">
-    <span>You're logged in as group leader. <a href="{% url 'adminpage' %}"> Visit the admin page.</a></span>
+    <div class="col s12 right">
+        <span class="flow-text">You're logged in as group leader. <a href="{% url 'adminpage' %}"> Visit the ADMIN page.</a></span>
+    </div>
 </section>
 {% endif %}
 
-<section id="splash" class="row">
-    <div class="col s12 m12 l6 center">
+<section id="splash" class="section row">
+    <div class="col s12 m6 l6 center">
         <div class="home-img container">
             <img id="record" src="https://media.giphy.com/media/nLw0pYqJ1G9kFDJg4P/source.gif">
         </div>
     </div>
-    <div class="col s12 m12 l5 center">
+    <div class="col s12 m5 l5 center">
         <div class="splash-text">
             <img id="aotw-heading" src="{% static '/aotw/media/aotw-expanded.png' %}" alt="Album of the Week Title">        
-            <p class="flow-text">share and review albums with friends</p>
-            <a href="#aotw_home"><button class="btn waves-effect waves-light">What's Spinning?</button></a>
+            <p class="flow-text">Share and review music with friends.</p>
+            <a href="#aotw_home"><button id="spinning-btn" class="btn waves-effect waves-light">What's Spinning?</button></a>
         </div>
     </div>
 </section>
 
-<section id="aotw_home" class="container section scrollspy">
-    <h2>Album of the Week</h2>
+<section id="aotw_home" class="container section">
     {% if aotw %}
-        <h5>{{ aotw.album }} </h5>
-        <p>Average Rating: {{ score }} </p>
+    <div class="row">
+        <div class="col s3 m3 l3">
+            <img class="vertical-logo responsive-img" src="{% static 'aotw/media/AOTW-logo-noguitar - vertical.png' %}">
+        </div>
+        <div class="col s9 m9 l9">
+            <img class="aotw-art responsive-img" src="{{ aotw.album.strAlbumThumb }}" alt="{{ aotw.album }} album cover">
+        </div>
+        <div class="col s12 m12 l12 center">
+            <h3><a href="{% url 'album' aotw.album.idAlbum %}">{{ aotw.album.strAlbum }}</a></h3>
+            <h5>by {{ aotw.album.strArtist }}</h5>
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <p class="flow-text">Posted on {{ aotw.aotw_date }}</p>                
+                
+                    <p class="flow-text">Average Score: <span class="score-span">{{ aotw.album.score }}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% else %}
-        <p>There is not an active AOTW. Nominate an album to review.</p>
+        <p class="flow-text">There is not an active AOTW. Nominate an album to be reviewed.</p>
     {% endif %}
 </section>
 
 {% if user.is_authenticated %}
 {% if can_review == True %}
-<section id="add_review" class="container">
-    <h2>Add New Review</h2>
-    <div class="row">
+<section id="add_review" class="section container center">
+    <div class="center">
+        <h4>Add New Review</h4>
+    </div>
+    <div class="row container">
       <form action="{% url 'index' %}" method="post" class="col s12">
         {% csrf_token %}
         <input type="select" name="album" id="album" value="{{ aotw.album.id }}" style="visibility: hidden;">
         <div class="row">
-            <div class="input-field col s12 m8 l6">                
+            <div class="input-field col s12 m8 l6 offset-m2 offset-l3">                
                 <p class="range-field">
-                    <label for="rating">Rate It!</label>
                     <input type="range" name="rating" id="rating" min="-5" max="5" />
+                    <label for="rating"><h4>Rate It!</h4></label>
                 </p>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <label for="review_text">What did you think?</label>4 
+                <label for="review_text">What did you think about {{ aotw.album }}?</label> 
                 {{ form.review_text }}
             </div>
         </div>
@@ -63,8 +84,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s12">                
-                <input type="submit" class="btn waves-effect waves-light" name="review" value="Publish">
+            <div class="col s12">                
+                <input type="submit" class="btn" name="review" value="Publish Review">
             </div>
         </div>
 
@@ -74,48 +95,65 @@
 </section>
 {% endif %}
 
-<section id="aotw_reviews" class="container">
-    <h2>Community Reviews</h2>
+<section id="aotw_reviews" class="section container">
+    <div class="center">
+        <h4>Community Reviews</h4>
+    </div>
     {% if reviews %}
         {% for review in reviews %}
         {% if review.user == user %}
         <div class="user_review">
         {% else %}
-        <div class="">
+        <div class="other_review">
         {% endif %}
-            <h5>{{ review.rating }} </h5>       
-            <span>by {{ review.user|title }}</span>
-            <p>{{ review.review_text }} </p>
-            <p>Top Tracks: {{ review.top_tracks }}</p>
+            <h5 class="score-span">{{ review.rating }} </h5>       
+            <span class="flow-text">by <a href="{% url 'profile' review.user.username %}">{{ review.user|title }}</a></span>
+            <p class="flow-text">{{ review.review_text }} </p>
+            <p class="flow-text">Top Tracks: {{ review.top_tracks }}</p>
         </div>
         {% endfor %}
     {% else %}
-        <p>Be the first to review this album!</p>
+        <p class="flow-text">Be the first to <a class="score-span" href="#add_review">review </a>this album!</p>
     {% endif %}
-</section>
+
 
 {% else %}
-<div class="container">
-    <p class="flow-text"> What are the people saying!? Log in to read reviews and add your own. </p>
-</div>
+<section id="aotw_reviews" class="section container">
+    <div class="center">
+        <h4>Community Reviews</h4>
+    </div>
+    <div class="center">
+        <p class="flow-text"> What are the people saying!? <a href="{% url 'login' %}">Login</a> to read reviews and add your own. </p>
+    </div>
+</section>
 
 {% endif %}
+</section>
 
-
-<section id="past-aow" class="container">
-    <h4>Past AOTWs</h4>
+<section id="past-aotw" class="section container">
+    <div class="center">
+        <h4>Past AOTWs</h4>
+    </div>
     <div class="carousel">
         {% for pastnom in pastnoms %}
         <a class="carousel-item" href="{% url 'album' pastnom.album.idAlbum %}"><img src="{{ pastnom.album.strAlbumThumb }}"></a>        
         {% endfor %}
     </div>
+    
+    <a href=""><p class="flow-text right">View All >> </p></a>
 </section>
 
-<section id="upcoming-aow" class="container">
-    <h4>Upcoming Albums</h4>
-    {% for nom in nominations %}
-        <p>{{ nom.album }}</p>
+<section id="upcoming-aotw" class="section container">
+    <div class="center">
+        <h4>Upcoming Albums</h4>
+    </div>
+    
+    {% for nom in nominations|slice:":3" %}
+        <a href="{% url 'album' nom.album.idAlbum %}"><p class="flow-text">{{ nom.album }}</p></a>
     {% endfor %}
+    <div>
+        <a href="{% url 'nominations' %}"><p class="flow-text right">View All >> </p></a>
+    </div>
 </section>
 
 {% endblock %}

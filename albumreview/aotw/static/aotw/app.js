@@ -6,7 +6,4 @@ document.addEventListener('DOMContentLoaded', function() {
     var carousel = document.querySelectorAll('.carousel');
     M.Carousel.init(carousel);
 
-    var scrollspy = document.querySelectorAll('.scrollspy');
-    M.ScrollSpy.init(scrollspy);
-
   });

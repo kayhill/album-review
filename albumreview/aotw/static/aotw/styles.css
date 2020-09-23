@@ -18,18 +18,22 @@ button {
 }
 
 .btn{
-    background-color: #ff85ea;
+    background-color: #f752e0;
     color: white;
     margin-top: 30px;
     margin-bottom: 30px;
 }
 
 .btn:hover, .btn:focus {
-    background-color: #f752e0 ;
+    background-color: #ff85ea ;
 }
 
 a {
     color:whitesmoke;
+}
+
+a:hover {
+    color: #ff85ea;
 }
 
 nav ul a:hover {
@@ -41,21 +45,23 @@ nav ul a:hover {
 }
 
 h1, h2, h3, h4, h5 {
-    margin-block-start: 0;
-    margin-block-end: 0;
+    margin-block-start: 10px;
+    margin-block-end: 20px;
     padding: 0;
+    font-weight: bold;
 }
 
-h5 {
-    padding: 0 0;
+img.responsive-img {
+    max-height: 400px !important;
 }
 
 p {
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
-.spacer {
-    height: 100px;
+.section {
+    margin-bottom: 50px;
+    margin-top: 50px;
 }
 
 textarea {
@@ -86,23 +92,23 @@ nav img {
 }
 
 nav {
+    z-index: 999;
     background-color: #090e13c0;
     height: 60px;
-    color: rgb(253, 255, 247);
+    color: ghostwhite;
 }
 
-nav i {
-    color:#ffd6f8;
 
-}
 
 #nav-mobile {
     padding-top: 10px;
 }
 
+
+
 .sidenav {
-    background-color: #2e0f30;
-    color: rgb(253, 255, 247);
+    background-color:#3d1642;
+    color: whitesmoke;
 }
 
 .sidenav {
@@ -118,26 +124,58 @@ nav i {
 /*splash*/
 #splash {
     height: 100vh;
+}
+#splash, #aotw_home, #past-aotw, #upcoming-aotw {
     padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 #record {
-    margin-top: 30px;
-    height: 40vh;
+    height: 30vh;
+}
+
+#spinning-btn {
+    margin-top: 10px;
+    margin-bottom: 0px;
 }
 
 .splash-text {
-    margin-top: 30px;
     font-style: italic;
 }
 
 #aotw-heading {
-    width: 80vw;
+    width: 90vw;
 }
 
-/* home - past albums  */
+.aotw-art {
+    height: 35vh;
+}
 
-/* bug in opacity styling when items < display number (default =5)
+
+
+.aotw-text {
+    text-align: right;
+}
+
+.score-span {
+    color: #e60ac1;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+/* home - past albums  */
+#past-aotw, #add_review {
+    width: 100%;
+    background-color: #9e59c02a;
+}
+
+#past-aotw p {
+    padding-right: 10px;
+}
+
+#past-aotw {
+    height: 100vh;
+}
+/* bug in materialize opacity styling when items < display number (default =5)
 
 .carousel-item {
   opacity: 1 !important;
@@ -147,8 +185,16 @@ nav i {
 /* home - reviews */
 
 .user_review {    
+    padding: 1em;
     border-color: #e60ac1;
     border-style: solid;
+    margin-top: 2em;
+}
+
+.other_review {    
+    border-color: ghostwhite;
+    border-style: solid;
+    padding: 1em;
 }
 
 
@@ -241,6 +287,23 @@ nav i {
     max-width: 70vw;
 }
 
+
+/* Medium devices (600px and up) */
+@media only screen and (min-width: 600px) {
+
+    #aotw-heading {
+        width: 40vw;
+    }
+
+    .aotw-art {
+        height: 60vh;
+    }
+
+    #past-aotw p {
+        padding-right: 50px;
+    }
+}
+
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
     .album-result {
@@ -259,15 +322,20 @@ nav i {
 
     #band-image {
         max-width: 40vw;
-    }
-    #aotw-heading {
-        width: 40vw;
-    }
+    }    
     
     #record {
         height: 60vh;
+        margin-top: 30px;
     }
+
     .splash-text {
         margin-top: 60px;
     }
+
+    .aotw-art {
+        height: 80vh;
+    }
 }
+
+
