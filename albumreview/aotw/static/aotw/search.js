@@ -5,10 +5,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   document.getElementById('custom-nom').addEventListener('click', () => loadNomForm());
+  document.getElementById('new-search').addEventListener('click', () => loadSearchForm());
+  
 });
 
 
 function loadNomForm() {
-  document.getElementById('nom-form').style.display = "block";
-  document.getElementById('custom-nom').style.display = "none";
+  document.getElementById('nom-form').classList.toggle("hidden");
 }
+
+function loadSearchForm() {
+  document.getElementById('new-search-form').classList.toggle("hidden");
+}
+

@@ -85,18 +85,18 @@ def search(request):
   
     
 def albumsearch(request, search_type, query):
-    message = ""
+
     form = AlbumForm(request.POST or None)
     if form.is_valid():
         album = form.save(commit=False)
         addalbum(album)
-        message = "Album saved!"
+        return HttpResponseRedirect(reverse("album", args=[album.idAlbum]))
 
     albums = []
     if search_type == '1':
         albums = Album.objects.filter(strArtist__iexact=query, custom=True)
         albums = list(albums)
-        response = requests.get('https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?s=%s' % query)
+        response = requests.get('https://www.theaudiodb.com/api/v1/json/523532/searchalbum.php?s=%s' % query)
         response = response.json()
         if response['album'] != None:
             albums += response['album']            
@@ -104,7 +104,7 @@ def albumsearch(request, search_type, query):
     elif search_type == '2':
         albums = Album.objects.filter(strAlbum__iexact=query, custom=True)
         albums = list(albums)
-        response = requests.get('https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?a=%s' % query)
+        response = requests.get('https://www.theaudiodb.com/api/v1/json/523532/searchalbum.php?a=%s' % query)
         response = response.json()
         if response['album'] != None: 
             albums += response['album']            
@@ -118,13 +118,15 @@ def albumsearch(request, search_type, query):
             'results': len(albums),
             'albums': albums,
             'page_obj': page_obj, 
-            'form': form,
-            'message': message })
+            'form': form
+            })
 
     else: 
         return render(request, "aotw/searchresults.html", {
             'albums': albums,
-             'form': form})
+             'form': form,
+             'message': message
+            })
 
 
 def album(request, album_id):
@@ -143,7 +145,7 @@ def album(request, album_id):
 
     except Album.DoesNotExist:
         ## if album NOT in database, get from API
-        response = requests.get('https://theaudiodb.com/api/v1/json/1/album.php?m=%s' % album_id)
+        response = requests.get('https://theaudiodb.com/api/v1/json/523532/album.php?m=%s' % album_id)
         response = response.json()
         album = response['album'][0]
         score = None
@@ -154,13 +156,14 @@ def album(request, album_id):
         "a": album,
         "nomination": nomination,
         "reviews": reviews,
-        "score": score
+        "score": score,
+        "user": request.user
         })     
 
 
 def artist(request, artist_id):
     ##always get from API
-    response = requests.get('https://theaudiodb.com/api/v1/json/1/artist.php?i=%s' % artist_id)
+    response = requests.get('https://theaudiodb.com/api/v1/json/523532/artist.php?i=%s' % artist_id)
     response = response.json()
     artists = response['artists']
 
@@ -193,11 +196,26 @@ def nominations(request):
     })
     return HttpResponseRedirect(reverse("nominations"))
 
+  
+def history(request):
+    
+    aotws = Nomination.objects.filter(aotw=True, active=False)
+    
+    return render(request, "aotw/history.html", {
+        "aotws": aotws
+    })
+
 
 @login_required
 def profile(request, username):
     user = User.objects.get(username=username)
     current_user = request.user
+
+    # Is user an admin?
+    if current_user.groups.filter(name="leader").exists():
+        leader = True
+    else:
+        leader = False
     
     if request.method == 'POST':
         album_id = request.POST["remove"]
@@ -205,11 +223,18 @@ def profile(request, username):
     
     nominations = Nomination.objects.filter(user=user)
     reviews = Review.objects.filter(user=user)
+
+    for review in reviews:
+        rating =+ review.rating
+
+    avg_rating = rating/len(reviews)
     return render(request, "aotw/profile.html", {
         "user": user,
         "current_user": current_user,
         "nominations": nominations,
         "reviews": reviews,
+        'rating': avg_rating,
+        'leader': leader
     })
 
 
@@ -223,11 +248,18 @@ def adminpage(request):
         except Nomination.DoesNotExist:
             aotw = None
         
+        users = User.objects.all()
+        
         ## Upcoming Nominations
         nominations = Nomination.objects.filter(aotw=False)
 
         ## Past Nominations
         pastnoms = Nomination.objects.filter(aotw=True, active=False)
+
+        ## AOTW Reviews
+        reviews = []
+        if aotw: 
+            reviews = Review.objects.filter(album=aotw.album)
 
         # Custom Nomination form
         form = AlbumForm(request.POST or None)
@@ -257,7 +289,9 @@ def adminpage(request):
             "aotw": aotw,
             "nominations": nominations,
             "pastnoms": pastnoms,
-            "form": form
+            "form": form,
+            "reviews": reviews,
+            "users": users
         }) 
     else:
         return HttpResponseRedirect(reverse("index"))

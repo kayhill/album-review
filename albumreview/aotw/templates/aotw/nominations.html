@@ -3,22 +3,51 @@
 
 {% block body %}
 
-{% for nom in nominations %}
 
-    <h2>{{ nom.album }}</h2>
-    {% if nom.aotw == False and nom.user == user %}
-        <form action="{% url 'nominations'%}" method="POST">
+<div class="container">
+    <div class="row">        
+        <h4>Upcoming</h4>
+        <p class="flow-text">These albums have been nominated for review by the AOTW community.</p>       
+    <div class="row">
+</div>
+
+<div class="container">
+    <div class="row">
+{% for nom in nominations %}
+    <div class="col s12 m6 l6">
+      <div class="card">
+        <div class="card-image">
+            <a href="{% url 'album' nom.album.idAlbum %}"><img src="{{ nom.album.strAlbumThumb }}"></a>
+        </div>
+        <div class="card-content center">
+          <a href="{% url 'album' nom.album.idAlbum %}"><h4>{{ nom.album.strAlbum }}</h4></a>
+          
+          {% if nom.album.idArtist %}
+          <a href="{% url 'artist' nom.album.idArtist %}"><h5>by {{ nom.album.strArtist }}</h5></a>
+          {% else %}
+          <h5>by {{ nom.album.strArtist }}</h5>
+          {% endif %}
+
+          <p>Nominated by <a href="{% url 'profile' nom.user.username %}">{{ nom.user|title }} </a> on {{ nom.created_on }}</p>
+        </div>
+        
+        
+          {% if nom.aotw == False and nom.user == user %}
+          <div class="card-action center">
+            <form action="{% url 'nominations'%}" method="POST">
             {% csrf_token %}
-            <button type="submit" class="btn" name="remove" value="{{ nom.album.id }}">Remove</button>        
-        </form>
+                <button type="submit" class="btn" name="remove" value="{{ nom.album.id }}">Remove</button>        
+            </form>
+          </div>
+          {% endif %}
         
-        
-    {% endif %}
+      </div>
+    </div>
 
 {% empty %}
 
     <p>There are no pending nominations.</p>
 
 {% endfor %}
-
+</div>
 {% endblock %}

@@ -1,12 +1,14 @@
 {% extends "aotw/index.html" %}
 
 {% block body %}
+<div class="container">
 
     <h2>Register</h2>
 
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
+
 
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
@@ -26,5 +28,5 @@
     </form>
 
     Already have an account? <a href="{% url 'login' %}">Log In here.</a>
-
+</div>
 {% endblock %}

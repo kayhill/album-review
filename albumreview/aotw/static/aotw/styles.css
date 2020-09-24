@@ -32,7 +32,7 @@ a {
     color:whitesmoke;
 }
 
-a:hover {
+a:hover, .pagination li a:hover, .pagination li a:focus, a:focus {
     color: #ff85ea;
 }
 
@@ -40,7 +40,7 @@ nav ul a:hover {
     text-transform: uppercase;
 }
 
-.hover-btn:hover {
+.hover-btn:hover, a:hover, .btn:hover, .btn:focus {
     cursor: pointer;
 }
 
@@ -50,6 +50,8 @@ h1, h2, h3, h4, h5 {
     padding: 0;
     font-weight: bold;
 }
+
+
 
 img.responsive-img {
     max-height: 400px !important;
@@ -85,6 +87,9 @@ select {
     color: #ff85ea;
 }
 
+.hidden {
+    display: none;
+}
 /* nav bar */
 nav img {
     height:40px;
@@ -98,21 +103,15 @@ nav {
     color: ghostwhite;
 }
 
-
-
 #nav-mobile {
     padding-top: 10px;
 }
 
-
-
 .sidenav {
-    background-color:#3d1642;
+    background-image: url('./media/lubo-minar-qRGuuVOzsTc-unsplash.jpg');
+    background-size: contain;
     color: whitesmoke;
-}
-
-.sidenav {
-    line-height: 100px;    
+    line-height: 100px;   
 }
 
 .sidenav li>a {
@@ -150,8 +149,6 @@ nav {
 .aotw-art {
     height: 35vh;
 }
-
-
 
 .aotw-text {
     text-align: right;
@@ -195,6 +192,7 @@ nav {
     border-color: ghostwhite;
     border-style: solid;
     padding: 1em;
+    margin-top: 2em;
 }
 
 
@@ -203,18 +201,19 @@ nav {
 #search-submit {
     margin-top: 0px;
 }
+
 #search-bar {
     margin: 50px;
     padding-top:50px;
     padding-bottom: 50px;
     background-color: #090e13bd;
-
 }
 
 #search-bar h3 {
     color: #ff85ea;
     font-weight: 700;
 }
+
 .album-btns-small {
     margin-top: 20px;
     margin-bottom:10px;
@@ -226,15 +225,15 @@ nav {
     padding-top: 30px;    
 }
 
+#search-results-heading {
+    margin-block-start: 20px;
+}
+
 .album-result {
     margin-top: 80px;
 }
 
-.album-art {
-    height: 200px;
-}
-
-.album-art img {
+.album-art img, .album-art {
     height: 200px;    
 }
 
@@ -256,14 +255,14 @@ nav {
     font-size: 1.5em;
 }
 
-#no-result {
-    background-image: url("./media/background_gradient.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-}
 
 .album-btns-small a.hover{
     text-transform: none;
+}
+
+.pagination li a {
+    font-weight: bold;
+    color: whitesmoke;
 }
 
 /* Album View */
@@ -287,6 +286,39 @@ nav {
     max-width: 70vw;
 }
 
+.collapsible-header {
+    background-color: transparent;
+}
+
+.collapsible-header:hover {
+    color: #f752e0;
+}
+
+.collapsible-header:active {
+    color: #e60ac1;
+}
+
+.album-view {
+    margin-top: 50px;
+}
+/* Nominations */
+
+.card {
+    background-color: #9e59c02a;
+}
+
+.card-action a {
+    color: whitesmoke !important;
+}
+
+.profile-username {
+    color: #e60ac1;
+}
+
+#past-aotw-admin {
+    background-color: #9e59c02a;
+    width: 100%;
+}
 
 /* Medium devices (600px and up) */
 @media only screen and (min-width: 600px) {

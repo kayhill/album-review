@@ -14,6 +14,7 @@ def addalbum(album):
     album.idAlbum = randomID
     album.custom = True
     album.save()
+    return 'Album saved. Thank you!'
 
 def nominate(user, album_id):
     ## check if album in db

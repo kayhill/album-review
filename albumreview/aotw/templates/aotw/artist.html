@@ -20,20 +20,26 @@
             <li>Genre: {{ a.strGenre }}</li>
             <li>Label: {{ a.strLabel }}</li>
         </ul>
-        <a href="{% url 'albumsearch' "><span class="flow-text">View Albums</span></a>
+        
+        <a href="{% url 'albumsearch' search_type='1' query=a.strArtist %}"><button class="flow-text btn"> View Albums </button></a>
     </div>
     <div class="col s12 m8 l8 center">
-        <img src="{{ a.strArtistThumb }}" alt="artist image" id="band-image">
+        <img src="{{ a.strArtistThumb }}" alt="artist image" class="responsive-img" id="band-image">
     </div>
 </div>
 <div class="row container">    
     <div class="col s12 l12">
-        <p class="flow-text">{{ a.strBiographyEN }}</p>
-    </div>
-    
+        <ul class="collapsible">
+            <li>
+              <div class="collapsible-header"><span class="flow-text">Artist Bio<i class="material-icons"> arrow_drop_down</i></div>
+              <div class="collapsible-body"><p class="flow-text">{{ a.strBiographyEN }}</p></div>
+            </li>
+        </ul>
+    </div>    
 </div>
 
 
 {% endfor %}
 
+<script src="{% static 'aotw/artist.js' %}"></script>
 {% endblock %}

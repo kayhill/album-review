@@ -5,19 +5,19 @@
 
 {% if leader == True %}
 <section id="admin-banner">
-    <div class="col s12 right">
+    <div class="col s12 center purple lighten-2">
         <span class="flow-text">You're logged in as group leader. <a href="{% url 'adminpage' %}"> Visit the ADMIN page.</a></span>
     </div>
 </section>
 {% endif %}
 
 <section id="splash" class="section row">
-    <div class="col s12 m6 l6 center">
+    <div class="col s12 m10 l6 center offset-m1">
         <div class="home-img container">
             <img id="record" src="https://media.giphy.com/media/nLw0pYqJ1G9kFDJg4P/source.gif">
         </div>
     </div>
-    <div class="col s12 m5 l5 center">
+    <div class="col s12 m10 l5 center offset-m1">
         <div class="splash-text">
             <img id="aotw-heading" src="{% static '/aotw/media/aotw-expanded.png' %}" alt="Album of the Week Title">        
             <p class="flow-text">Share and review music with friends.</p>
@@ -140,7 +140,7 @@
         {% endfor %}
     </div>
     
-    <a href=""><p class="flow-text right">View All >> </p></a>
+    <a href="{% url 'history' %}"><p class="flow-text right">View All >> </p></a>
 </section>
 
 <section id="upcoming-aotw" class="section container">
@@ -152,7 +152,11 @@
         <a href="{% url 'album' nom.album.idAlbum %}"><p class="flow-text">{{ nom.album }}</p></a>
     {% endfor %}
     <div>
+        {% if user.is_authenticated %}
         <a href="{% url 'nominations' %}"><p class="flow-text right">View All >> </p></a>
+        {% else %}
+        <a href="{% url 'login' %}"><p class="flow-text right">View All >> </p></a>
+        {% endif %}
     </div>
 </section>
 

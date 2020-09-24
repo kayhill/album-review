@@ -20,7 +20,7 @@
           {% if user.is_authenticated %}
           <ul id="nav-mobile" class="right hide-on-med-and-down flow-text">          
             <li><a href="{% url 'profile' request.user %}">My Profile</a></li>
-            <li><a href="{% url 'nominations' %}">History</a></li>
+            <li><a href="{% url 'history' %}">History</a></li>
             <li><a href="{% url 'nominations' %}">Upcoming</a></li>
             <li><a href="{% url 'search'%}"><i class="material-icons text-white right">search</i>Search</a></li> 
     
@@ -42,7 +42,7 @@
         <li><a href="{% url 'index' %}">Home</a></li>
         <li><a href="{% url 'profile' request.user %}">My Profile</a></li>
             <li><a href="{% url 'nominations' %}">Upcoming</a></li>
-            <li><a href="{% url 'nominations' %}">History</a></li>
+            <li><a href="{% url 'history' %}">History</a></li>
             <li><a href="{% url 'search'%}"><i class="material-icons text-white right">search</i>Search</a></li> 
             
       </ul>
@@ -51,7 +51,7 @@
         <li><a href="{% url 'index' %}">Home</a></li>
         <li><a href="{% url 'register' %}">Register</a></li>
         <li><a href="{% url 'login' %}">Login</a></li>
-        <li><a href="{% url 'search'%}"><i class="material-icons left">search</i>Search</a></li>              
+        <li><a href="{% url 'search'%}"><i class="material-icons text-white right">search</i>Search</a></li>              
       </ul>
       {% endif %}
     

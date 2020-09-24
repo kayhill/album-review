@@ -2,23 +2,21 @@
 {% load static %}
 
 {% block body %}
-<div id="search-results-page">
 
-  
-{% if message %}
-  <div>{{ message }}</div>
-{% endif %}
 
-<div class="container">
-{% if results %}
-<h4>Your search returned {{ results }} results </h3>
-{% endif %}
+<div class="row container">
+  <div class="col s12 center">
+    {% if results == 1 %}    
+    <h5 class="purple lighten-2">Your search returned {{ results }} result.</h5>
+    {% elif results > 1 %}    
+    <h5 class="purple lighten-2">Your search returned {{ results }} results.</h5>    
+    {% endif %}
+  </div>
 </div>
+</section>
 
 
 <section id="search-results" class="row">
-
-
 
 {% for album in page_obj %}
 
@@ -48,46 +46,54 @@
 </div>
 
 {% empty %}
-<div class="text-field purple-text container">
-  <h5>Sorry, your search returned 0 results.</h5>
+<div class="container">
+  <div class="center">
+    <h5 class="purple lighten-2">Your search did not return any results.</h5>
+  </div>
     <ul id="nom-tips" class="browser-default flow-text">
       <li>Double check your spelling, including spaces</li>
       <li>Are you missing 'The'?</li>
       <li>Switch your search category: search for artist instead of album, or an album instead of an artist</li>
     </ul>
 </div>
+{% endfor %}
 </section>
 
-{% endfor %}
 
 {% if page_obj %}
-<section id="pagination-links" class="row container">
-  <span class="step-links">
-      {% if page_obj.has_previous %}
-          <a href="?page=1">&laquo; first</a>
-          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-      {% endif %}
-
-      <span class="current">
-          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+<section id="pagination-links" class="container">
+  <div class="row">
+    <div class="col s12 m12 l6 offset-l3 center">
+      <span class="step-links">
+        <ul class="pagination text-white">
+          {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a><li class="waves-effect"></li>
+          {% endif %}
+    
+          {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.paginator.count < 10 %}
+            {% else %}
+              <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+          {% endfor %}
+    
+          {% if page_obj.has_next %}
+          <li><a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a></li>
+          {% endif %}
+        </ul>
       </span>
-
-      {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">next</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-      {% endif %}
-  </span>
-</div>
+    </div>
+  </div>
 </section>
 {% endif %}
 
-<section id="search-bar">
-  <div class="container">
-    <h3 class="center">New Search</h3>
-  </div>
-  <div class="container center row search">
 
-    <form id="search-query" action="" method="POST">
+<section id="new-search-bar" class="container">
+  <div class="row center">
+    <h5><a id="new-search"><i class="material-icons">search</i> New Search</a></h5>
+  </div>
+  <div class="center row search hidden" id="new-search-form">
+    <form id="search-query" action="{% url 'search' %}" method="POST">
       {% csrf_token %}
       <div class="input-field col s6 m4 l4">
         <select class="browser-default" name="search-option" required>
@@ -111,64 +117,56 @@
 
 
 <section id="no-result" class="container">
-  <div class="container">
-    <h4 class="center white-text">Didn't find what you were looking for?</h4>
-    
-    <div class="text-field purple-text">
-      <p class="flow-text">If you are still having trouble, the artist or album may not exist in the database. </p>
-      <br>
-      <p class="flow-text center white-text">Would you like to submit a custom nomination form?</p>
-      <div class="container center">
-        <button class="btn" id="custom-nom">Yes, please!</button>
-      </div>
-    </div>
+  <div class="row center">
+    <h5><a href="#nom-form" id="custom-nom"><i class="material-icons">star</i> Custom Submission</a></h5>
   </div>
 </section>
 
-  <section id="nom-form" class="row" style="display:none">
-    <div class="container">
-    <form action="" method="POST">
-        {% csrf_token %}
-        <div class="input-field col s12">
-            <label for="id_strAlbum">Album Title</label>
-            {{ form.strAlbum }}
-        </div>
+<section id="nom-form" class="row hidden">
+  <div class="container center ">
+  <p class="flow-text">Help improve AOTW for everyone by contributing to the database. Please complete all fields as completely as possible.</p>
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div class="input-field col s12">
+      <label for="id_strAlbum">Album Title</label>
+      {{ form.strAlbum }}
+    </div>
 
-        <div class="input-field col s12">
-            <label for="id_strArtist">Artist</label>
-            {{ form.strArtist }}
-        </div>
+    <div class="input-field col s12">
+      <label for="id_strArtist">Artist</label>
+      {{ form.strArtist }}
+    </div>
         
-        <div class="input-field col s12">
-            <label for="id_strDescriptionEN">Album Description</label>
-            {{ form.strDescriptionEN }}
-        </div>
+    <div class="input-field col s12">
+      <label for="id_strDescriptionEN">Album Description</label>
+      {{ form.strDescriptionEN }}
+    </div>
 
-        <div class="input-field col s12">
-            <label for="id_strAlbumThumb">Album Image URL</label>
-            {{ form.strAlbumThumb }}
-        </div>
+    <div class="input-field col s12">
+      <label for="id_strAlbumThumb">Album Image URL</label>
+      {{ form.strAlbumThumb }}
+    </div>
 
-        <div class="input-field col s12">
-            <label for="id_intYearReleased">Release Year</label>
-            {{ form.intYearReleased }}
-        </div>
+    <div class="input-field col s12">
+      <label for="id_intYearReleased">Release Year</label>
+      {{ form.intYearReleased }}
+    </div>
         
-        <div class="input-field col s12">
-            <label for="id_strLabel">Label</label>
-            {{ form.strLabel}}
-        </div>
+    <div class="input-field col s12">
+      <label for="id_strLabel">Label</label>
+      {{ form.strLabel}}
+    </div>
 
-        <div class="input-field col s12">
-            <label for="id_strGenre">Genre</label>
-            {{ form.strGenre}}
-        </div>
+    <div class="input-field col s12">
+      <label for="id_strGenre">Genre</label>
+        {{ form.strGenre}}
+    </div>
 
-        <div class="center">            
-            <input id="custom-nom-submit" type="submit" class="btn" value="Save Album">       
-        </div>              
-    </form>
-  </div> 
+    <div class="center">            
+      <input id="custom-nom-submit" type="submit" class="btn" value="Save Album">       
+    </div>              
+  </form>
+</div> 
 </section>
    
 

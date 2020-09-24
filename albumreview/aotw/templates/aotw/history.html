@@ -1,0 +1,47 @@
+{% extends "aotw/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+
+<div class="container">
+    <div class="row">        
+        <h4>AOTW History</h4>
+        <p class="flow-text">{{ aotws.count }} albums have been reviewed by the AOTW community so far!</p>       
+    <div class="row">
+</div>
+
+<div class="container">
+<div class="row">
+{% for aotw in aotws %}
+    <div class="col s12 m6 l6">
+      <div class="card">
+        <div class="card-image">
+            <a href="{% url 'album' aotw.album.idAlbum %}"><img src="{{ aotw.album.strAlbumThumb }}"></a>
+        </div>
+        <div class="card-content center">
+          <a href="{% url 'album' aotw.album.idAlbum %}"><h4>{{ aotw.album.strAlbum }}</h4></a>
+          
+          {% if album.idArtist %}
+          <a href="{% url 'artist'  aotw.album.idArtist %}"><h5>by {{ aotw.album.strArtist }}</h5></a>
+          {% else %}
+          <h5>by {{ aotw.album.strArtist }}</h5>
+          {% endif %}
+
+          <p class="flow-text">Score: <span class="score-span">{{ aotw.album.score }} </span></p>
+        </div>
+    
+        <div class="card-action center">
+           <a href="{% url 'album' aotw.album.idAlbum %}">View Details >> </a>  
+        </div>    
+      </div>
+    </div>
+
+{% empty %}
+
+    <p>No albums have been reviewed yet!</p>
+
+{% endfor %}
+</div>
+</div>
+{% endblock %}

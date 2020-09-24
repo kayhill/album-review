@@ -3,13 +3,12 @@
 
 {% block body %}
 
-
-<section id="album-header" class="row container center">
-    <div class="col s12 m6 l6 center">
+<div class="row album-view">
+    <div class="col s12 m6 l4 offset-l1 center">
         <h2>{{ a.strAlbum }}</h2>
         <h4 class="album-artist">by 
             
-            {% if a.artistID %}
+            {% if a.idArtist %}
             <a href="{% url 'artist' a.idArtist %}">{{ a.strArtist }}</a>
             {% else %}
             {{ a.strArtist}}
@@ -18,19 +17,19 @@
         </h4>
     </div>
 
-    <div class="col s12 m6 l6 center">
-        <div class="album-cover-big border">
+    <div class="col s12 m6 l5">
+        <div class="album-cover-big border center">
         {% if a.strAlbumThumb %}
-            <a href="{% url 'album' a.idAlbum %}"><img class="z-depth-2" src="{{ a.strAlbumThumb }}" alt="placeholder image for album cover"></a>
+            <a href="{% url 'album' a.idAlbum %}"><img class="responsive-img z-depth-2" src="{{ a.strAlbumThumb }}" alt="placeholder image for album cover"></a>
         {% else %}
             <a href="{% url 'album' a.idAlbum %}"><img class="z-depth-2" src="https://i.ibb.co/VVFSqNk/music-album-icon-2.jpg" alt="album-cover"></a>
         {% endif %}
         </div>
     </div>
-</section>
+</div>
 
-<section id="album-info-section" class="row container center">
-    <div class="col s6">
+<div class="row">
+    <div class="col s12 m6 l4 offset-l1 center">
         <ul class="flow-text">
             <li>Year Released: {{ a.intYearReleased }}</li>
             <li>Label: {{ a.strLabel }}</li>
@@ -40,35 +39,64 @@
         </ul>
     </div>
 
-    <div class="col s6 m6 l6">
-        <br>
+    <div class="col s12 m6 l5 center">
         {% if nomination %}
             {% if nomination.aotw == True %}
-            <p> Past AOTW </p>
+                <h5 class="purple lighten-2">Past AOTW!</h5>
+                <p class="flow-text">Score:<span class="score-span"> {{ nomination.album.score }}</span></p>
+                <p class="flow-text"> Reviewed by {{ reviews.count }} users on {{ nomination.aotw_date }} </p>
             {% else %}
-
-            <p> Nominated by {{ nomination.user.username|title }} on {{ nomination.created_on }} </p>
+            <h5 class="purple lighten-2">Upcoming AOTW!</h5>
+            <p class="flow-text"> Nominated by <a href="{% url 'profile' nomination.user.username %}">{{ nomination.user.username|title }}</a> on {{ nomination.created_on }} </p>
             
             {% endif %}
         {% else %}
-        <form action="{% url 'nominations' %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="btn" name="newnom" value="{{ a.idAlbum }}"><i class="material-icons purple-text">stars</i>Nominate</button>        
-        </form>
-        
+            {% if user.is_authenticated %}
+                <form action="{% url 'nominations' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn" name="newnom" value="{{ a.idAlbum }}"><i class="material-icons ">stars</i> Nominate</button>        
+                </form>        
+            {% endif %}
         {% endif %}
     </div>
-</section>
+</div>
 
-<section class="row container center" id="album-description-section">
-    <div class="col s12">
-        <p class="flow-text">{{ a.strDescriptionEN }}</p>
+{% if reviews %}
+<section id="album-view-reviews">
+    <div class="row container">
+        
+        {% for review in reviews %}
+        {% if review.user == user %}
+        <div class="user_review">
+        {% else %}
+        <div class="other_review">
+        {% endif %}
+            <h5 class="score-span">{{ review.rating }} </h5>       
+            <span class="flow-text">by <a href="{% url 'profile' review.user.username %}">{{ review.user|title }}</a></span>
+            <p class="flow-text">{{ review.review_text }} </p>
+            <p class="flow-text">Top Tracks: {{ review.top_tracks }}</p>
+        </div>
+        {% endfor %}
+
+            
     </div>
 </section>
+{% endif %}
+
+<div class="row container">  
+    <div class="col s12 l12">
+        <ul class="collapsible">
+            <li>
+              <div class="collapsible-header"><span class="flow-text">Album Description<i class="material-icons"> arrow_drop_down</i></div>
+              <div class="collapsible-body"><p class="flow-text">{{ a.strDescriptionEN }}</p></div>
+            </li>
+        </ul>
+    </div>    
+</div>
 
 
 
 
-
+<script src="{% static 'aotw/artist.js' %}"></script>
 
 {% endblock %}

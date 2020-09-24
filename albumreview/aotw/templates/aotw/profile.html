@@ -4,37 +4,114 @@
 
 {% block body %}
 
-{% if user == current_user %}
-<div class="row">
-    <a href="{% url 'logout' %}"><button class="btn">Log Out</button></a>
-</div>
+{% if leader == True %}
+<section id="admin-banner">
+    <div class="col s12 center purple lighten-2">
+        <span class="flow-text">You're logged in as group leader. <a href="{% url 'adminpage' %}"> Visit the ADMIN page.</a></span>
+    </div>
+</section>
 {% endif %}
 
+<section id="profile-info" class="section">
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h3 class="profile-username">{{ user.username|title }}</h3>
+            <p class="flow-text">Joined: {{ user.date_joined }} </p>
+            <p class="flow-text"><a href="#profile-reviews">Reviews:</a> {{ reviews.count }} </p>
+            <p class="flow-text"><a href="#profile-nominations">Nominations:</a> {{ nominations.count }} </p>
+            <p class="flow-text">Avg. Rating: {{ rating }} </p>
 
-<h3>{{ user.username|title }}</h3>
+        </div>
+    </div>    
+    {% if user == current_user %}
+    <div class="row">
+        <a href="{% url 'logout' %}"><button class="btn">Log Out</button></a>
+    </div>
+    {% endif %}
+</div>
+</section>
 
 
-<p>Joined: {{ user.date_joined }} </p>
+<section id="profile-reviews" class="section">
+    <div class="container">
+        <div class="row">
+            <h5>User Reviews</h5>
+            {% for review in reviews %}
+            {% if review.user == current_user %}
+                <div class="user_review">
+                {% else %}
+                <div class="other_review">
+                {% endif %}
+                    <div class="col s6 m6 l6">
+                        <img class="responsive-img" src="{{ review.album.strAlbumThumb }}">
+                    </div>
+                <div class="col s6 m6 l6">                
+                {% if review.album.idArtist %}
+                    <h5 class="center"><a href="{% url 'album' review.album.idAlbum %}">{{ review.album.strAlbum }}</a> by <a href="{% url 'artist' review.album.idArtist %}"> {{ review.album.strArtist}}</a></p>
+                {% else %}
+                    <h5 class="center"><a href="{% url 'album' review.album.idAlbum %}">{{ review.album.strAlbum }}</a> by {{ review.album.strArtist}}</a></p>
+                {% endif %}
+                    <h4 class="score-span center">{{ review.rating }} </h4>  
+                </div>
 
-<h5> Nominations </h5>
-    <ul>
-    {% for nom in nominations %}
-        <li>{{ nom.album }}</li>
-        {% if current_user == nom.user and nom.aotw == False %}
-        <form action="{% url 'profile' current_user %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="btn" name="remove" value="{{ nom.album.id }}">Remove</button>        
-        </form>
-        {% endif %}
-    {% endfor %}
-    </ul>
+                <div class="row">
+                    <div class="col s12 m12 l12">
+                        <p class="flow-text">{{ review.review_text }} </p>
+                        <p class="flow-text">Top Tracks: {{ review.top_tracks }}</p>
+                    </div>
+                </div> 
+                </div>                    
+                   
+            {% empty %}
+            <div class ="row">
+                <div class="col s12 m12 l12">
+                    <p class="flow-text">No reviews :( </p>
+                </div>
+            </div>                
+         {% endfor %}         
+        </div>            
+    </div>
+</section>
+    
 
-<h5> Reviews </h5>
-    <ul>
-    {% for review in reviews %}
-        <li>{{ review.album }} rated {{ review.rating }}</li>
-    {% endfor %}
-    </ul>
+<section id="profile-nominations" class="section">
+    <div class="container">
+        <div class="row">
+            <h5>User Nominations</h5>
+
+            {% for nom in nominations %}
+            <div class="col s12 m6 l6">
+                <div class="card">
+                    <div class="card-image">
+                        <a href="{% url 'album' nom.album.idAlbum %}"><img src="{{ nom.album.strAlbumThumb }}"></a>
+                    </div>
+                    <div class="card-content center">
+                        <a href="{% url 'album' nom.album.idAlbum %}"><h4>{{ nom.album.strAlbum }}</h4></a>          
+                        {% if nom.album.idArtist %}
+                        <a href="{% url 'artist' nom.album.idArtist %}"><h5>by {{ nom.album.strArtist }}</h5></a>
+                    {% else %}
+                    <h5>by {{ nom.album.strArtist }}</h5>
+                    {% endif %}
+                    <p>Nominated on {{ nom.created_on }}</p>
+                    </div>       
+        
+                {% if nom.aotw == False and nom.user == user %}
+                <div class="card-action center">
+                    <form action="{% url 'nominations'%}" method="POST">
+                    {% csrf_token %}
+                        <button type="submit" class="btn" name="remove" value="{{ nom.album.id }}">Remove</button>        
+                    </form>
+                </div>
+                {% endif %}        
+            </div>
+        </div>
+{% empty %}
+    <p>There are no pending nominations.</p>
+{% endfor %}        
+    </div>
+</section>
+
 
 
 
