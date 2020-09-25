@@ -159,6 +159,11 @@ nav {
     font-size: 1.5em;
     font-weight: bold;
 }
+
+.score-review {
+    color: #e60ac1;
+    font-weight: bold;
+}
 /* home - past albums  */
 #past-aotw, #add_review {
     width: 100%;
@@ -182,7 +187,7 @@ nav {
 /* home - reviews */
 
 .user_review {    
-    padding: 1em;
+    padding: 1em !important;
     border-color: #e60ac1;
     border-style: solid;
     margin-top: 2em;
@@ -191,7 +196,7 @@ nav {
 .other_review {    
     border-color: ghostwhite;
     border-style: solid;
-    padding: 1em;
+    padding: 1em !important;
     margin-top: 2em;
 }
 
@@ -312,7 +317,7 @@ nav {
 }
 
 .profile-username {
-    color: #e60ac1;
+    color:darkturquoise;
 }
 
 #past-aotw-admin {
@@ -368,6 +373,7 @@ nav {
     .aotw-art {
         height: 80vh;
     }
+
 }
 
 

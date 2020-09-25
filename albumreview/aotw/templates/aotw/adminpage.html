@@ -11,11 +11,11 @@
         <h4>Current AOTW </h4>
         {% if aotw %} 
         <div class="col s12 m6 l6 center">
-            <img class="responsive-img" src="{{ aotw.album.strAlbumThumb }}">
+            <a href="{% url 'album' aotw.album.idAlbum %}"><img class="responsive-img" src="{{ aotw.album.strAlbumThumb }}"></a>
         </div>
         <div class="col s12 m6 l6 center">
-                <h5 ><a href="{% url 'album' aotw.album.idAlbum %}">{{ aotw.album.strAlbum }}</a>
-                by {{ aotw.album.strArtist }}</h5>
+                <h5><a href="{% url 'album' aotw.album.idAlbum %}">{{ aotw.album.strAlbum }}
+                by {{ aotw.album.strArtist }}</a></h5>
                 <p class="flow-text">Posted on {{ aotw.aotw_date }}</p>  
                 <p class="flow-text">Reviewed by {{ reviews.count }}</p>    
                 <p class="flow-text">Average Score: <span class="score-span">{{ aotw.album.score }}</span></p>
@@ -116,7 +116,7 @@
     <h4>Past AOTW's</h4>
     <ul class="flow-text">            
     {% for pastnom in pastnoms %}
-        <a href="{% url 'album' pastnom.album.idAlbum %}"><li>{{ pastnom.album }}</a> - {{ pastnom.album.score }}</li>    
+        <a href="{% url 'album' pastnom.album.idAlbum %}"><li>{{ pastnom.album }}... <em>Score: {{ pastnom.album.score }}</em></li></a>    
     {% empty %}
     <li>There are no past AOTW.</li>
     {% endfor %}
@@ -128,7 +128,7 @@
     <ul class="flow-text">
     {% for user in users %}
     
-        <a href="{% url 'profile' user.username %}"><li>{{ user.username|title }} </li></a>
+        <a href="{% url 'profile' user.username %}"><li>{{ user.username|title }} ... <em>  Last Login: {{ user.last_login }}</em></li></a>
 
     {% endfor %}
 

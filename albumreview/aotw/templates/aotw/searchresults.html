@@ -71,7 +71,7 @@
           {% endif %}
     
           {% for i in page_obj.paginator.page_range %}
-            {% if page_obj.paginator.count < 10 %}
+            {% if page_obj.paginator.count < 2 %}
             {% else %}
               <li><a href="?page={{ i }}">{{ i }}</a></li>
             {% endif %}

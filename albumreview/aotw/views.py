@@ -190,9 +190,16 @@ def nominations(request):
     
     else: 
         nominations = Nomination.objects.filter(aotw=False)
+
+        if nominations: 
+            paginator = Paginator(nominations, 8) 
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)   
+
         return render(request, "aotw/nominations.html", {
         "nominations": nominations,
-        "user": user
+        "user": user,
+        "page_obj": page_obj
     })
     return HttpResponseRedirect(reverse("nominations"))
 
@@ -200,9 +207,14 @@ def nominations(request):
 def history(request):
     
     aotws = Nomination.objects.filter(aotw=True, active=False)
+    if aotws: 
+        paginator = Paginator(aotws, 8) 
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)   
     
     return render(request, "aotw/history.html", {
-        "aotws": aotws
+        "aotws": aotws,
+        "page_obj": page_obj
     })
 
 

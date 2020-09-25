@@ -1,5 +1,6 @@
 {% extends "aotw/layout.html" %}
 {% load static %}
+{% load avatar_tags %}
 
 {% block body %}
 
@@ -98,23 +99,34 @@
 <section id="aotw_reviews" class="section container">
     <div class="center">
         <h4>Community Reviews</h4>
+        <a href="{% url 'album' aotw.album.idAlbum %}"><h5><em>{{ aotw.album }}</em> </h5></a>
     </div>
     {% if reviews %}
+    <div class="row">
         {% for review in reviews %}
         {% if review.user == user %}
-        <div class="user_review">
+        <div class="user_review col s12">
         {% else %}
-        <div class="other_review">
+        <div class="other_review col s12">
         {% endif %}
-            <h5 class="score-span">{{ review.rating }} </h5>       
-            <span class="flow-text">by <a href="{% url 'profile' review.user.username %}">{{ review.user|title }}</a></span>
-            <p class="flow-text">{{ review.review_text }} </p>
-            <p class="flow-text">Top Tracks: {{ review.top_tracks }}</p>
+        <div class="row">
+            <div class="col s3 l2 center">
+                {% avatar review.user class="circle center responsive-img" id="user_avatar" %}
+                <h3 class="score-review center">{{ review.rating }} </h3>
+            </div>
+            <div class="col s9 l10 left">
+                <p class="flow-text"><a href="{% url 'profile' review.user.username %}">{{ review.user|title }}</a> says ... </p>
+                <p class="flow-text">{{ review.review_text }} </p>
+                <p class="flow-text"><em>Top Tracks: {{ review.top_tracks }}</p></em>
+            </div>       
         </div>
+        </div>    
         {% endfor %}
+    </div>
     {% else %}
         <p class="flow-text">Be the first to <a class="score-span" href="#add_review">review </a>this album!</p>
     {% endif %}
+    </div>
 
 
 {% else %}

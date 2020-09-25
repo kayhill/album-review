@@ -7,13 +7,13 @@
 <div class="container">
     <div class="row">        
         <h4>Upcoming</h4>
-        <p class="flow-text">These albums have been nominated for review by the AOTW community.</p>       
+        <p class="flow-text">{{ nominations.count }} albums have been nominated for review by the AOTW community.</p>       
     <div class="row">
 </div>
 
 <div class="container">
     <div class="row">
-{% for nom in nominations %}
+{% for nom in page_obj %}
     <div class="col s12 m6 l6">
       <div class="card">
         <div class="card-image">
@@ -50,4 +50,33 @@
 
 {% endfor %}
 </div>
+</div>
+
+{% if page_obj %}
+<section id="pagination-links" class="container">
+  <div class="row">
+    <div class="col s12 m12 l6 offset-l3 center">
+      <span class="step-links">
+        <ul class="pagination text-white">
+          {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a><li class="waves-effect"></li>
+          {% endif %}
+    
+          {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.paginator.count < 9 %}
+            {% else %}
+              <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+          {% endfor %}
+    
+          {% if page_obj.has_next %}
+          <li><a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a></li>
+          {% endif %}
+        </ul>
+      </span>
+    </div>
+  </div>
+</section>
+{% endif %}
+
 {% endblock %}

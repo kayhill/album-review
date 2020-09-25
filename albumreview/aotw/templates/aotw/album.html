@@ -1,5 +1,6 @@
 {% extends "aotw/layout.html" %}
 {% load static %}
+{% load avatar_tags %}
 
 {% block body %}
 
@@ -61,27 +62,30 @@
     </div>
 </div>
 
-{% if reviews %}
-<section id="album-view-reviews">
-    <div class="row container">
-        
+<section id="album-view-reviews" class="section container">
+    <div class="row">
         {% for review in reviews %}
         {% if review.user == user %}
-        <div class="user_review">
+        <div class="user_review col s12">
         {% else %}
-        <div class="other_review">
+        <div class="other_review col s12">
         {% endif %}
-            <h5 class="score-span">{{ review.rating }} </h5>       
-            <span class="flow-text">by <a href="{% url 'profile' review.user.username %}">{{ review.user|title }}</a></span>
-            <p class="flow-text">{{ review.review_text }} </p>
-            <p class="flow-text">Top Tracks: {{ review.top_tracks }}</p>
+        <div class="row">
+            <div class="col s3 l2 center">
+                {% avatar review.user class="circle center responsive-img" id="user_avatar" %}
+                <h3 class="score-review center">{{ review.rating }} </h3>
+            </div>
+            <div class="col s9 l10 left">
+                <p class="flow-text"><a href="{% url 'profile' review.user.username %}">{{ review.user|title }}</a> says ... </p>
+                <p class="flow-text">{{ review.review_text }} </p>
+                <p class="flow-text"><em>Top Tracks: {{ review.top_tracks }}</p></em>
+            </div>       
         </div>
+        </div>    
         {% endfor %}
-
-            
-    </div>
+    </div> 
 </section>
-{% endif %}
+
 
 <div class="row container">  
     <div class="col s12 l12">
