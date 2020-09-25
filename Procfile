@@ -1,1 +1,1 @@
-web: gunicorn albumreview.wsgi
+web: gunicorn albumreview.wsgi --log-file -
