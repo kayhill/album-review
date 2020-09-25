@@ -16,7 +16,8 @@ import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+#BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,24 +31,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'aotw.herokuapp.com']
-
-#logging
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-             'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
-        },
-    },
-}
 
 # Application definition
 
@@ -157,15 +140,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_URL = '/static/'
 
 #location where django collect all static files
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
 
-# location where you will store your static files
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'aotw/static')]
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
