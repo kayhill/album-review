@@ -125,7 +125,6 @@ def albumsearch(request, search_type, query):
         return render(request, "aotw/searchresults.html", {
             'albums': albums,
              'form': form,
-             'message': message
             })
 
 
