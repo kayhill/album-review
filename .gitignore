@@ -3,3 +3,8 @@ env
 *.pyc
 __pycache__
 media
+*.log
+*.pot
+local_settings.py
+db.sqlite3
+venv/

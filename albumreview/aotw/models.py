@@ -33,6 +33,9 @@ class Nomination(models.Model):
     aotw_date = models.DateField('date as AOTW', null=True, blank=True)
     active = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['-aotw_date']
+
     def __init__(self, *args, **kwargs):
         super(Nomination, self).__init__(*args, **kwargs)
         self._aotw = self.aotw
