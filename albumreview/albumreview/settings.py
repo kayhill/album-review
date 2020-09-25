@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'aotw',
     'rest_framework',
     'avatar'
 ]
