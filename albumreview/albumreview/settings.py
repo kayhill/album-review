@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -47,8 +48,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -141,8 +142,9 @@ STATIC_URL = '/static/'
 
 #location where django collect all static files
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
 # location where you will store your static files
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'aotw/static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'albumreview/static')
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
