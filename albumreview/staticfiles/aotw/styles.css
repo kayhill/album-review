@@ -1,0 +1,379 @@
+/* universal */
+
+
+body {
+    font-size: 16px;
+    background-color: #020304;
+    background-image: url('./media/lubo-minar-qRGuuVOzsTc-unsplash.jpg');
+    background-size: contain;
+    color: whitesmoke;
+    font-family: 'Roboto Condensed', sans-serif;    
+}
+
+
+button {
+    background-color: transparent;
+    border: none;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.btn{
+    background-color: #f752e0;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.btn:hover, .btn:focus {
+    background-color: #ff85ea ;
+}
+
+a {
+    color:whitesmoke;
+}
+
+a:hover, .pagination li a:hover, .pagination li a:focus, a:focus {
+    color: #ff85ea;
+}
+
+nav ul a:hover {
+    text-transform: uppercase;
+}
+
+.hover-btn:hover, a:hover, .btn:hover, .btn:focus {
+    cursor: pointer;
+}
+
+h1, h2, h3, h4, h5 {
+    margin-block-start: 10px;
+    margin-block-end: 20px;
+    padding: 0;
+    font-weight: bold;
+}
+
+
+
+img.responsive-img {
+    max-height: 400px !important;
+}
+
+p {
+    margin: 10px auto;
+}
+
+.section {
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+textarea {
+    background-color: whitesmoke;
+    height: 8rem;
+}
+
+input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+    background-color: white;
+    border-bottom: none;
+    color: #ff85ea;
+}
+
+.input-field>label {
+    color: #f752e0;
+    pointer-events: all!important;
+}
+
+select {
+    background-color: white;
+    color: #ff85ea;
+}
+
+.hidden {
+    display: none;
+}
+/* nav bar */
+nav img {
+    height:40px;
+    margin-top:10px;
+}
+
+nav {
+    z-index: 999;
+    background-color: #090e13c0;
+    height: 60px;
+    color: ghostwhite;
+}
+
+#nav-mobile {
+    padding-top: 10px;
+}
+
+.sidenav {
+    background-image: url('./media/lubo-minar-qRGuuVOzsTc-unsplash.jpg');
+    background-size: contain;
+    color: whitesmoke;
+    line-height: 100px;   
+}
+
+.sidenav li>a {
+    color: white;
+    font-size: 1.2em;
+    font-weight: 400;
+}
+
+/*splash*/
+#splash {
+    height: 100vh;
+}
+#splash, #aotw_home, #past-aotw, #upcoming-aotw {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#record {
+    height: 30vh;
+}
+
+#spinning-btn {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.splash-text {
+    font-style: italic;
+}
+
+#aotw-heading {
+    width: 90vw;
+}
+
+.aotw-art {
+    height: 35vh;
+}
+
+.aotw-text {
+    text-align: right;
+}
+
+.score-span {
+    color: #e60ac1;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.score-review {
+    color: #e60ac1;
+    font-weight: bold;
+}
+/* home - past albums  */
+#past-aotw, #add_review {
+    width: 100%;
+    background-color: #9e59c02a;
+}
+
+#past-aotw p {
+    padding-right: 10px;
+}
+
+#past-aotw {
+    height: 100vh;
+}
+/* bug in materialize opacity styling when items < display number (default =5)
+
+.carousel-item {
+  opacity: 1 !important;
+}
+*/
+
+/* home - reviews */
+
+.user_review {    
+    padding: 1em !important;
+    border-color: #e60ac1;
+    border-style: solid;
+    margin-top: 2em;
+}
+
+.other_review {    
+    border-color: ghostwhite;
+    border-style: solid;
+    padding: 1em !important;
+    margin-top: 2em;
+}
+
+
+/* search  */
+
+#search-submit {
+    margin-top: 0px;
+}
+
+#search-bar {
+    margin: 50px;
+    padding-top:50px;
+    padding-bottom: 50px;
+    background-color: #090e13bd;
+}
+
+#search-bar h3 {
+    color: #ff85ea;
+    font-weight: 700;
+}
+
+.album-btns-small {
+    margin-top: 20px;
+    margin-bottom:10px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.search {
+    padding-top: 30px;    
+}
+
+#search-results-heading {
+    margin-block-start: 20px;
+}
+
+.album-result {
+    margin-top: 80px;
+}
+
+.album-art img, .album-art {
+    height: 200px;    
+}
+
+.album-art img:hover{
+    height: 210px;    
+}
+
+.album-info {
+    padding-top:30px;
+}
+
+.album-artist {
+    font-weight: 300;
+    font-style: italic;
+}
+
+.album-title {
+    font-weight: 700;
+    font-size: 1.5em;
+}
+
+
+.album-btns-small a.hover{
+    text-transform: none;
+}
+
+.pagination li a {
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+/* Album View */
+
+.album-cover-big img {
+    height: 300px;  
+    margin-top: 50px;  
+}
+
+#album-header {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Artist View */
+#band-logo {
+    max-width: 80vw;    
+}
+
+#band-image {
+    max-width: 70vw;
+}
+
+.collapsible-header {
+    background-color: transparent;
+}
+
+.collapsible-header:hover {
+    color: #f752e0;
+}
+
+.collapsible-header:active {
+    color: #e60ac1;
+}
+
+.album-view {
+    margin-top: 50px;
+}
+/* Nominations */
+
+.card {
+    background-color: #9e59c02a;
+}
+
+.card-action a {
+    color: whitesmoke !important;
+}
+
+.profile-username {
+    color:darkturquoise;
+}
+
+#past-aotw-admin {
+    background-color: #9e59c02a;
+    width: 100%;
+}
+
+/* Medium devices (600px and up) */
+@media only screen and (min-width: 600px) {
+
+    #aotw-heading {
+        width: 40vw;
+    }
+
+    .aotw-art {
+        height: 60vh;
+    }
+
+    #past-aotw p {
+        padding-right: 50px;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .album-result {
+        margin-top: 50px;
+    }
+
+    .album-cover-big img {
+        height: 400px;
+        margin-top: 0px; 
+    }
+    
+    #album-header {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }   
+
+    #band-image {
+        max-width: 40vw;
+    }    
+    
+    #record {
+        height: 60vh;
+        margin-top: 30px;
+    }
+
+    .splash-text {
+        margin-top: 60px;
+    }
+
+    .aotw-art {
+        height: 80vh;
+    }
+
+}
+
+
