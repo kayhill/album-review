@@ -29,7 +29,7 @@ SECRET_KEY = 'jigerj**u#^c&i-2myd9(nx=&c&mp-!rwb4v!i@v8g2p2b3m_8'
 #SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = False
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'aotw.herokuapp.com']
 
@@ -145,7 +145,7 @@ STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'aotw/static'),
+    os.path.join(BASE_DIR, 'media'),
 )
 
 # Simplified static file serving.
