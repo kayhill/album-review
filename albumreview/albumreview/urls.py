@@ -24,5 +24,6 @@ urlpatterns = [
     path("", include("aotw.urls")),
     path('avatar/', include('avatar.urls')),
     path('media/avatars/', include('avatar.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
+#+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

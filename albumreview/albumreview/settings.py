@@ -29,7 +29,7 @@ SECRET_KEY = 'jigerj**u#^c&i-2myd9(nx=&c&mp-!rwb4v!i@v8g2p2b3m_8'
 #SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'aotw.herokuapp.com']
 
@@ -85,14 +85,13 @@ WSGI_APPLICATION = 'albumreview.wsgi.application'
 #
 #DATABASES = {
 #    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#       'NAME': 'albumreview',
+#       'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'albumreview',
 #       'USER': 'postgres',
 #       'PASSWORD': 'password',
 #       'HOST': '127.0.0.1',
 #       'PORT': '5432',
-
-#   }
+#  }
 #}
 
 DATABASES = {}
@@ -154,7 +153,7 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 
 # Configure Django App for Heroku.
