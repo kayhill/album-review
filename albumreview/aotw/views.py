@@ -104,7 +104,7 @@ def albumsearch(request, search_type, query):
     elif search_type == '2':
         albums = Album.objects.filter(strAlbum__iexact=query, custom=True)
         albums = list(albums)
-        response = requests.get('https://www.theaudiodb.com/api/v1/json/523532/searchalbum.php?a=%s' % query)
+        response = requests.get('https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?a=%s' % query)
         response = response.json()
         if response['album'] != None: 
             albums += response['album']            
