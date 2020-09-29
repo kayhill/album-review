@@ -8,8 +8,9 @@ def addalbum(album):
     album.strArtist = titlecase(album.strArtist)
     album.strGenre = titlecase(album.strGenre)
     album.strLabel = titlecase(album.strLabel)
-    customalb = Album.objects.filter(custom=True).last()   
-    randomID = customalb.idAlbum + 1
+    customalbs = Album.objects.filter(custom=True)   
+    i = len(customalbs) + 1
+    randomID = 999900000 + i
     album.idAlbum = randomID
     album.custom = True
     album.save()
