@@ -107,7 +107,7 @@
                     <p>Nominated on {{ nom.created_on }}</p>
                     </div>       
         
-                {% if nom.aotw == False and nom.user == user %}
+                {% if nom.aotw == False and nom.user == current.user %}
                 <div class="card-action center">
                     <form action="{% url 'nominations'%}" method="POST">
                     {% csrf_token %}
