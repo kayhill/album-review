@@ -78,7 +78,7 @@
                 <h3 class="score-review center">{{ review.rating }} </h3>
             </div>
             <div class="col s9 l10 left">
-                <p class="flow-text"><a href="{% url 'profile' review.user.username %}">{{ review.user|title }}</a> says ... </p>
+                <p class="flow-text"><a href="{% url 'profile' review.user.username %}">{{ review.user }}</a> says ... </p>
                 <p class="flow-text">{{ review.review_text }} </p>
                 <p class="flow-text"><em>Top Tracks: {{ review.top_tracks }}</p></em>
             </div>       

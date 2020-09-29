@@ -2,7 +2,7 @@
 {% load static %}
 {% load avatar_tags %}
 
-{% block title %} {{ user.username|title}} Profile | AOTW {% endblock %}
+{% block title %} {{ user.username }} Profile | AOTW {% endblock %}
 
 
 {% block body %}
@@ -22,7 +22,7 @@
             <div class="row ">
                 <div class="col s6 center">
                     {% avatar user 120 class="circle responsive-img" id="user_avatar" %}
-                    <h3 class="profile-username">{{ user.username|title }}</h3>                    
+                    <h3 class="profile-username">{{ user.username }}</h3>                    
                 </div>
                 <div class="col s6 l12">
                     {% if user == current_user %}

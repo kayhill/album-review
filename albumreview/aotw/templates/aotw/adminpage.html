@@ -46,7 +46,7 @@
               <h5>by {{ nom.album.strArtist }}</h5>
               {% endif %}
     
-              <p>Nominated by <a href="{% url 'profile' nom.user.username %}">{{ nom.user|title }} </a> on {{ nom.created_on }}</p>
+              <p>Nominated by <a href="{% url 'profile' nom.user.username %}">{{ nom.user }} </a> on {{ nom.created_on }}</p>
             </div>        
             <div class="card-action center">
                 <form action="" method="POST">
@@ -130,7 +130,7 @@
     <ul class="flow-text">
     {% for user in users %}
     
-        <a href="{% url 'profile' user.username %}"><li>{{ user.username|title }} ... <em>  Last Login: {{ user.last_login }}</em></li></a>
+        <a href="{% url 'profile' user.username %}"><li>{{ user.username }} ... <em>  Last Login: {{ user.last_login }}</em></li></a>
 
     {% endfor %}
 
