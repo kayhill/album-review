@@ -18,7 +18,7 @@
 <section id="profile-info" class="section">
 <div class="container">
     <div class="row">
-        <div class="col s12 l6">
+        <div class="col s12 l4 offset-l2">
             <div class="row ">
                 <div class="col s6 center">
                     {% avatar user 120 class="circle responsive-img" id="user_avatar" %}
@@ -32,8 +32,7 @@
                 </div>                
             </div>
         </div>
-        <div class="col s12 l6 large-screen-spacer">
-            <p class="flow-text">Joined: {{ user.date_joined }} </p>
+        <div class="col s12 l4 bio">
             <p class="flow-text"><a href="#profile-reviews">Reviews:</a> {{ reviews.count }} </p>
             <p class="flow-text"><a href="#profile-nominations">Nominations:</a> {{ nominations.count }} </p>
             <p class="flow-text">Avg. Rating: {{ rating }} </p>
@@ -54,25 +53,33 @@
                 {% else %}
                 <div class="other_review">
                 {% endif %}
-                    <div class="col s6 m6 l4">
+                    <div class="col s6 m4 l4">
                         <img class="responsive-img" src="{{ review.album.strAlbumThumb }}">
                     </div>
-                <div class="col s6 m6 l3">                
-                {% if review.album.idArtist %}
-                    <h5 class="center"><a href="{% url 'album' review.album.idAlbum %}">{{ review.album.strAlbum }}</a> by <a href="{% url 'artist' review.album.idArtist %}"> {{ review.album.strArtist}}</a></p>
-                {% else %}
-                    <h5 class="center"><a href="{% url 'album' review.album.idAlbum %}">{{ review.album.strAlbum }}</a> by {{ review.album.strArtist}}</a></p>
-                {% endif %}
-                    <h4 class="score-span center">{{ review.rating }} </h4>  
-                </div>
+                    <div class="col s6 m5 l5">                
+                    {% if review.album.idArtist %}
+                        <h3 class=""><a href="{% url 'album' review.album.idAlbum %}">{{ review.album.strAlbum|upper }}</a></h3>
+                        <h5><em><a href="{% url 'artist' review.album.idArtist %}">BY {{ review.album.strArtist|upper }}</em></a></h5>
+                    {% else %}
+                        <h3 class=""><a href="{% url 'album' review.album.idAlbum %}">{{ review.album.strAlbum|upper }}</a></h3>
+                        <h5><em>BY {{ review.album.strArtist|upper }}</em></h5>
+                    {% endif %}
+                    </div>   
+                    <div class="col s6 m3 l3">
+                        
+                        <p class="rating-box right">rated <span class="score-review big-score center">{{ review.rating }}</span></p>  
+                        <span class="sub-title right">on -5 to 5 scale</span>
+                               
+                    </div>            
+                
 
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <p class="flow-text">{{ review.review_text }} </p>
-                        <em><p class="flow-text">Top Tracks: {{ review.top_tracks }}</p></em>
-                    </div>
-                </div> 
-                </div>                    
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <p class="flow-text">{{ review.review_text }} </p>
+                    <em><p class="flow-text">Top Tracks: {{ review.top_tracks }}</p></em>
+                </div>
+            </div> 
+            </div>                    
                    
             {% empty %}
             <div class ="row">

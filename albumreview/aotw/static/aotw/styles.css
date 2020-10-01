@@ -71,15 +71,17 @@ textarea {
     height: 8rem;
 }
 
-input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
     background-color: white;
     border-bottom: none;
-    color: #ff85ea;
+    color: #020304;
+    padding: 10px; 
 }
 
 .input-field>label {
     color: #f752e0;
     pointer-events: all!important;
+    padding: 10px;
 }
 
 select {
@@ -146,6 +148,10 @@ nav {
     width: 90vw;
 }
 
+#aotw-heading-not-logged-in {
+    width: 80vw;
+}
+
 .aotw-art {
     height: 35vh;
 }
@@ -163,6 +169,25 @@ nav {
 .score-review {
     color: #e60ac1;
     font-weight: bold;
+    font-size: 3em;
+}
+
+.big-score {
+    font-size: 8em;
+    margin-bottom:0px;
+}
+
+.rating-box {
+    margin-top: -45px;
+    margin-bottom: 0;
+
+}
+
+.sub-title {
+    opacity: 60%;
+    margin-top: -1.5em;
+    line-height: 16px;
+    text-transform: uppercase;
 }
 /* home - past albums  */
 #past-aotw, #add_review {
@@ -174,9 +199,7 @@ nav {
     padding-right: 10px;
 }
 
-#past-aotw {
-    height: 100vh;
-}
+
 /* bug in materialize opacity styling when items < display number (default =5)
 
 .carousel-item {
@@ -200,6 +223,10 @@ nav {
     margin-top: 2em;
 }
 
+/* profile */
+.bio {
+    text-align: right;
+}
 
 /* search  */
 
@@ -328,8 +355,8 @@ nav {
 /* Medium devices (600px and up) */
 @media only screen and (min-width: 600px) {
 
-    #aotw-heading {
-        width: 40vw;
+    #aotw-heading-not-logged-in {
+        width: 70vh ;
     }
 
     .aotw-art {
@@ -356,6 +383,10 @@ nav {
         margin-top: 50px;
         margin-bottom: 50px;
     }   
+
+    #aotw-heading-not-logged-in {
+        width: 80vh ;
+    }
 
     #band-image {
         max-width: 40vw;
