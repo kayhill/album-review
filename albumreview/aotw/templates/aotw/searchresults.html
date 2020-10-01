@@ -34,7 +34,11 @@
   </div>
   <div class="album-info center">
     <a href="{% url 'album' album.idAlbum %}"><p class="album-title flow-text">{{ album.strAlbum }}</p></a>
+    {% if album.idArtist %}
     <a href="{% url 'artist' album.idArtist %}"><p class="album-artist flow-text">{{ album.strArtist }}</p></a>
+    {% else %}
+    <p class="album-artist flow-text">{{ album.strArtist }}</p>
+    {% endif %}
     
     <div class="album-btns-small container">
       <form action="{% url 'nominations' %}" method="POST">
