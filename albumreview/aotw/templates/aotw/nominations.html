@@ -30,7 +30,7 @@
           <h5>by {{ nom.album.strArtist }}</h5>
           {% endif %}
 
-          <p>Nominated by <a href="{% url 'profile' nom.user.username %}">{{ nom.user|title }} </a> on {{ nom.created_on }}</p>
+          <p>Nominated by <a href="{% url 'profile' nom.user.username %}">{{ nom.user }} </a> on {{ nom.created_on }}</p>
         </div>
         
         
