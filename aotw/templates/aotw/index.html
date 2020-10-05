@@ -56,7 +56,11 @@
         {% endif %}
         <div class="col s12 m6 l6 right">
             <h3><a href="{% url 'album' aotw.album.idAlbum %}">{{ aotw.album.strAlbum }}</a></h3>
-            <h5>by <a href="{% url 'artist' aotw.album.strArtist %}"> {{ aotw.album.strArtist }}</a></h5>
+            {% if aotw.album.idArtist %}
+            <h5>by <a href="{% url 'artist' aotw.album.idArtist %}"> {{ aotw.album.strArtist }}</a></h5>
+            {% else %}
+            <h5>by {{ aotw.album.strArtist }}</h5>
+            {% endif %}
             <div class="row">
                 <div class="col s12 m12 l12 ">    
                     <p class="flow-text">rated    <span class="score-review center">  {{ aotw.album.score }}</span></p>
