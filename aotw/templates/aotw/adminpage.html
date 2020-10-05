@@ -1,0 +1,140 @@
+{% extends "aotw/layout.html" %}
+{% load static %}
+
+{% block title %} Admin Tools | AOTW {% endblock %}
+
+{% block body %}
+<div class="container">
+
+<h3>Welcome, AOTW Admin!</h3>
+
+<section id="aotw-admin" class="section">    
+    <div class="row">
+        <h4>Current AOTW </h4>
+        {% if aotw %} 
+        <div class="col s12 m6 l6 center">
+            <a href="{% url 'album' aotw.album.idAlbum %}"><img class="responsive-img" src="{{ aotw.album.strAlbumThumb }}"></a>
+        </div>
+        <div class="col s12 m6 l6 center">
+                <h5><a href="{% url 'album' aotw.album.idAlbum %}">{{ aotw.album.strAlbum }}
+                by {{ aotw.album.strArtist }}</a></h5>
+                <p class="flow-text">Posted on {{ aotw.aotw_date }}</p>  
+                <p class="flow-text">Reviewed by {{ reviews.count }}</p>    
+                <p class="flow-text">Average Score: <span class="score-span">{{ aotw.album.score }}</span></p>
+        </div>
+    </div>
+
+    {% else %}
+        <p class="flow-text">There is not an active AOTW. Promote an album.</p>
+    {% endif %}
+</section>
+    
+
+<section id="upcoming" class="row section">
+        <h4>Pending Nominations</h4>
+        <div class="row">
+        {% for nom in nominations %}
+        <div class="col s12 m6 l6">
+          <div class="card">
+            
+            <div class="card-content center">
+              <a href="{% url 'album' nom.album.idAlbum %}"><h4>{{ nom.album.strAlbum }}</h4></a>
+              
+              {% if nom.album.idArtist %}
+              <a href="{% url 'artist' nom.album.idArtist %}"><h5>by {{ nom.album.strArtist }}</h5></a>
+              {% else %}
+              <h5>by {{ nom.album.strArtist }}</h5>
+              {% endif %}
+    
+              <p>Nominated by <a href="{% url 'profile' nom.user.username %}">{{ nom.user }} </a> on {{ nom.created_on }}</p>
+            </div>        
+            <div class="card-action center">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <button class="btn" type="submit" name="promote" value="{{ nom.album.id }}">Promote to AOTW</button>
+                 </form>
+            </div>        
+        </div>
+        </div>    
+    {% empty %}    
+        <p>There are no pending nominations.</p>
+    {% endfor %}
+    </div>
+</section>
+
+<section id="custom-nom" class="section">
+    <h4>Custom Album Submission</h4>
+    <div class="row">
+        <p class="flow-text center">Use this form to add missing albums to the database. Include as much information as possible.</p>
+        <div class="container">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="input-field col s12">
+                <label for="id_strAlbum">Album Title</label>
+                {{ form.strAlbum }}
+            </div>
+
+            <div class="input-field col s12">
+                <label for="id_strArtist">Artist</label>
+                {{ form.strArtist }}
+            </div>
+            
+            <div class="input-field col s12">
+                <label class="active" for="id_strDescriptionEN">Album Description</label>
+                {{ form.strDescriptionEN }}
+            </div>
+
+            <div class="input-field col s12">
+                <label for="id_strAlbumThumb">Album Image URL</label>
+                {{ form.strAlbumThumb }}
+            </div>
+
+            <div class="input-field col s12">
+                <label for="id_intYearReleased">Release Year</label>
+                {{ form.intYearReleased }}
+            </div>
+            
+            <div class="input-field col s12">
+                <label for="id_strLabel">Label</label>
+                {{ form.strLabel}}
+            </div>
+
+            <div class="input-field col s12">
+                <label for="strGenre">Genre</label>
+                {{ form.strGenre}}
+            </div>
+
+            <div class="center">  
+                <p class="flow-text">Wait! Are you absolutely sure the album does not already exist in the database? </p>          
+                <input id="custom-nom-submit" type="submit" class="btn" value="Yes, I'm Sure!">       
+            </div>              
+        </form>
+    </div>
+    </div>
+</section>
+
+
+<section id="past-aotw-admin" class="row section">
+    <h4>Past AOTW's</h4>
+    <ul class="flow-text">            
+    {% for pastnom in pastnoms %}
+        <a href="{% url 'album' pastnom.album.idAlbum %}"><li>{{ pastnom.album }}... <em>Score: {{ pastnom.album.score }}</em></li></a>    
+    {% empty %}
+    <li>There are no past AOTW.</li>
+    {% endfor %}
+    </ul>
+</section>
+
+<section id="users" class="row">
+    <h4>User List</h4>
+    <ul class="flow-text">
+    {% for user in users %}
+    
+        <a href="{% url 'profile' user.username %}"><li>{{ user.username }} ... <em>  Last Login: {{ user.last_login }}</em></li></a>
+
+    {% endfor %}
+
+</ul>
+
+</section>
+{% endblock %}
