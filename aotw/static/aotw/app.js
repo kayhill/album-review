@@ -6,13 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
   var carousel = document.querySelectorAll('.carousel');
   M.Carousel.init(carousel);
 
-  geturl();
+  // avatar img src
+  const pics = document.querySelectorAll('.user_avatar');
+  pics.forEach(geturl);
 });
 
-function geturl() {
-  const pics = document.querySelectorAll('.user_avatar');
-  for (let pic in pics) {
+function geturl(pic) {  
     url = pic.src;
     url.replace('/resized/80/', '/');
-  }
 }
