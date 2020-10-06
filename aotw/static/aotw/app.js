@@ -14,4 +14,5 @@ document.addEventListener('DOMContentLoaded', function () {
 function geturl(pic) {  
     url = pic.src;
     url.replace('/resized/80/', '/');
+    pic.src = url;
 }
