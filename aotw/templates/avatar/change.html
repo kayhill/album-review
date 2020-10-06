@@ -6,6 +6,7 @@
 
 
 {% block body %}
+<div class="container">
     <p>{% trans "Your current avatar: " %}</p>
     {% avatar user class="circle center responsive-img user_avatar" %}
     {% if not avatars %}
@@ -24,4 +25,5 @@
     </form>
 
     <a href="{% url 'profile' user %}"><button class="btn">Back to Profile</button></a>
+</div>
 {% endblock %}
