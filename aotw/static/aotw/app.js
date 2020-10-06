@@ -13,6 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function geturl(pic) {  
     url = pic.attributes[0].nodeValue;
-    url.replace('/resized/80/', '/');
+    url = url.replace('/resized/80/', '/');
     pic.attributes[0].nodeValue = url;
 }
