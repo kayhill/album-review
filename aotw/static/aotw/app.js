@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function geturl(pic) {  
-    url = pic.src;
+    url = pic.attributes[0].nodeValue;
     url.replace('/resized/80/', '/');
-    pic.src = url;
+    pic.attributes[0].nodeValue = url;
 }
