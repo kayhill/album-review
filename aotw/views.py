@@ -190,10 +190,10 @@ def nominations(request):
     else: 
         nominations = Nomination.objects.filter(aotw=False)
 
-        if nominations: 
-            paginator = Paginator(nominations, 8) 
-            page_number = request.GET.get('page')
-            page_obj = paginator.get_page(page_number)   
+        
+        paginator = Paginator(nominations, 8) 
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)   
 
         return render(request, "aotw/nominations.html", {
         "nominations": nominations,
