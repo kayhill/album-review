@@ -16,7 +16,7 @@ The app stores user, album, nomination, and review data in a PostgreSQL database
 - Linking albums to Spotify API so users can click and listen to the AOTW
 - Remove django-avatar package and rely on Cloudinary for profile image manipulation
 - Allow users to add reviews to past AOTW's
-- Allow uers to edit/change their saved reviews
+- Allow users to edit/change their saved reviews
 
 ## Design
 This app uses a mobile-first responsive design. Materialize CSS was used for the front-end. This framework allows easy manipulation of the grid for responsive design. Some JavaScript was used to improve the UX. 
