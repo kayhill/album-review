@@ -197,6 +197,10 @@ nav {
     background-clip: padding-box;
 }
 
+#upcoming-aotw {
+    padding: 50px 50px;
+}
+
 .height {
     height: 100px;
 }
@@ -401,6 +405,10 @@ nav {
 
     .aotw-art {
         height: 80vh;
+    }
+
+    #past-aotw, #add_review, #upcoming-aotw {
+        padding: 50px 150px;
     }
 
 }
