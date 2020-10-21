@@ -4,11 +4,12 @@
 body {
     font-size: 16px;
     background-color: #020304;
-    background-image: url('./media/lubo-minar-qRGuuVOzsTc-unsplash.jpg');
+    /*background-image: url('./media/lubo-minar-qRGuuVOzsTc-unsplash.jpg');*/
     background-size: contain;
     color: whitesmoke;
     font-family: 'Roboto Condensed', sans-serif;    
 }
+
 
 
 button {
