@@ -138,6 +138,7 @@ nav {
     margin-top: 0px;
     padding-top: 30vh;
 }
+
 #aotw_home, #past-aotw, #upcoming-aotw {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -417,7 +418,7 @@ nav {
     }
 
     #splash {
-        margin-top: 15vh;
+        padding-top: 15vh;
     }
 
     .aotw-art {
