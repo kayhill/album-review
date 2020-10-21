@@ -64,6 +64,7 @@
     </div>
 </div>
 
+{% if user.is_authenticated %}
 <section id="album-view-reviews" class="section container">
     <div class="row">
         {% for review in reviews %}
@@ -92,6 +93,17 @@
         {% endfor %}
     </div> 
 </section>
+
+{% else %}
+<section id="album-view-reviews" class="section container">
+    <div class="center">
+        <h4>Community Reviews</h4>
+    </div>
+    <div class="center">
+        <p class="flow-text"> What are the people saying!? <a href="{% url 'login' %}">Login</a> to read reviews and add your own. </p>
+    </div>
+</section>
+{% endif %}
 
 
 <div class="row container">  
