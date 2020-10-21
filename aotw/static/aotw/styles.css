@@ -124,10 +124,21 @@ nav {
 }
 
 /*splash*/
+#splash { 
+    background-image: url('./media/ana-grave-gHcWaeldgtQ-unsplash.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: gray;
+    background-blend-mode: difference;
+}
+
 #splash {
     height: 100vh;
+    margin-top: 0px;
+    padding-top: 30vh;
 }
-#splash, #aotw_home, #past-aotw, #upcoming-aotw {
+#aotw_home, #past-aotw, #upcoming-aotw {
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -197,6 +208,7 @@ nav {
     padding: 50px 50px;
     background-clip: padding-box;
 }
+
 
 #upcoming-aotw {
     padding: 50px 50px;
@@ -402,6 +414,10 @@ nav {
 
     .splash-text {
         margin-top: 60px;
+    }
+
+    #splash {
+        margin-top: 15vh;
     }
 
     .aotw-art {
