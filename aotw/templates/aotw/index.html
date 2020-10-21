@@ -64,7 +64,7 @@
             <div class="row">
                 <div class="col s12 m12 l12 ">    
                     <p class="flow-text">rated    <span class="score-review center">  {{ aotw.album.score }}</span></p>
-                    <p class="sub-title">on -5 to 5 scale</p>                    
+                    <p class="sub-title">on -5 to +5 scale</p>                    
                 </div>
                 <div class="col l12 hide-on-med-and-down">
                     <br>
@@ -81,7 +81,7 @@
 
 {% if user.is_authenticated %}
 {% if can_review == True %}
-<section id="add_review" class="section container center">
+<section id="add_review" class="section center">
     <div class="center">
         <h4>Add New Review</h4>
     </div>
@@ -138,7 +138,7 @@
             <div class="col s3 l2 center">
                 {% avatar review.user class="circle center responsive-img user_avatar" %}
                 <p class="flow-text">rated <span class="score-review center">{{ review.rating }}</span></p>
-                <p class="sub-title">on -5 to 5 scale</p>
+                <p class="sub-title">on -5 to +5 scale</p>
             </div>
             <div class="col s9 l10 left">
                 <p class="flow-text"><a href="{% url 'profile' review.user.username %}">{{ review.user }}</a> says ... </p>
@@ -168,7 +168,7 @@
 {% endif %}
 </section>
 
-<section id="past-aotw" class="section container">
+<section id="past-aotw" class="section">
     <div class="center">
         <h4>Past AOTWs</h4>
     </div>
@@ -177,8 +177,9 @@
         <a class="carousel-item" href="{% url 'album' pastnom.album.idAlbum %}"><img src="{{ pastnom.album.strAlbumThumb }}"></a>        
         {% endfor %}
     </div>
-    
-    <a href="{% url 'history' %}"><p class="flow-text right">View All >> </p></a>
+    <div class="height">    
+        <a href="{% url 'history' %}"><p class="flow-text right">View All >> </p></a>
+    </div>
 </section>
 
 <section id="upcoming-aotw" class="section container">
@@ -189,7 +190,7 @@
     {% for nom in nominations|slice:":3" %}
         <a href="{% url 'album' nom.album.idAlbum %}"><p class="flow-text">{{ nom.album }}</p></a>
     {% endfor %}
-    <div>
+    <div class="height">
         {% if user.is_authenticated %}
         <a href="{% url 'nominations' %}"><p class="flow-text right">View All >> </p></a>
         {% else %}

@@ -190,15 +190,16 @@ nav {
     text-transform: uppercase;
 }
 /* home - past albums  */
+
 #past-aotw, #add_review {
-    width: 100%;
-    background-color: #9e59c02a;
+    background: #9e59c02a;
+    padding: 50px 50px;
+    background-clip: padding-box;
 }
 
-#past-aotw p {
-    padding-right: 10px;
+.height {
+    height: 100px;
 }
-
 
 /* bug in materialize opacity styling when items < display number (default =5)
 
@@ -363,9 +364,6 @@ nav {
         height: 60vh;
     }
 
-    #past-aotw p {
-        padding-right: 50px;
-    }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
