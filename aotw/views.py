@@ -236,18 +236,18 @@ def profile(request, username):
     reviews = Review.objects.filter(user=user)
 
     rating = 0
-    avg_rating = 0
+    
     if reviews:
         for review in reviews:
             rating =+ review.rating    
-        avg_rating = rating/len(reviews)
+            rating = rating/reviews.count()
 
     return render(request, "aotw/profile.html", {
         "user": user,
         "current_user": current_user,
         "nominations": nominations,
         "reviews": reviews,
-        'rating': avg_rating,
+        'rating': rating,
         'leader': leader
     })
 
