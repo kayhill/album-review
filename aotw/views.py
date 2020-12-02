@@ -12,6 +12,7 @@ from .forms import ReviewForm, AlbumForm
 from .methods import addalbum, nominate, remove_nomination
 
 import requests
+import math 
 
 
 def index(request):
@@ -45,7 +46,7 @@ def index(request):
             for review in reviews:
                 score += review.rating 
             score = score/reviews.count()      
-            album.score = score
+            album.score = math.ceil(score)
             album.save()       
     # Review Form
         
