@@ -41,10 +41,10 @@ def index(request):
         album = Album.objects.get(id=aotw.album.id)
         score = 0
         # Calculate average rating
-        if len(reviews) > 0:
+        if reviews:
             for review in reviews:
                 score += review.rating 
-            score = score/len(reviews)      
+            score = score/reviews.count()      
             album.score = score
             album.save()       
     # Review Form
