@@ -239,8 +239,8 @@ def profile(request, username):
     
     if reviews:
         for review in reviews:
-            rating =+ review.rating    
-            rating = rating/reviews.count()
+            rating += review.rating    
+        rating /= reviews.count()
 
     return render(request, "aotw/profile.html", {
         "user": user,
