@@ -45,8 +45,9 @@ def index(request):
         if reviews:
             for review in reviews:
                 score += review.rating 
-            score = score/reviews.count()      
-            album.score = math.ceil(score)
+            score /= reviews.count()  
+            score = math.ceil(score)    
+            album.score = score
             album.save()       
     # Review Form
         
