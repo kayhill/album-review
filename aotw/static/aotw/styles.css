@@ -429,7 +429,7 @@ nav {
 }
 
 /* XLarge devices (laptops/desktops, 1400px and up) */
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1400px) {
     .sub-title {
         margin: 0;
     }
