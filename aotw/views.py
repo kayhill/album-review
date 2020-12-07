@@ -191,7 +191,6 @@ def nominations(request):
     
     else: 
         nominations = Nomination.objects.filter(aotw=False)
-
         
         paginator = Paginator(nominations, 8) 
         page_number = request.GET.get('page')
