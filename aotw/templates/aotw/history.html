@@ -13,10 +13,10 @@
     <div class="row">
 </div>
 
-<div class="container">
+
 <div class="row">
 {% for aotw in page_obj %}
-    <div class="col s12 m6 l6">
+    <div class="col s12 m6 l4">
       <div class="card">
         <div class="card-image">
             <a href="{% url 'album' aotw.album.idAlbum %}"><img src="{{ aotw.album.strAlbumThumb }}"></a>
