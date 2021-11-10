@@ -1,6 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -93,7 +92,6 @@ def albumsearch(request, search_type, query):
         album = form.save(commit=False)
         addalbum(album)
         return HttpResponseRedirect(reverse("album", args=[album.idAlbum]))
-
     albums = []
     if search_type == '1':
         albums = Album.objects.filter(strArtist__iexact=query, custom=True)
@@ -141,8 +139,7 @@ def album(request, album_id):
         try: 
             nomination = Nomination.objects.get(album=album.id)
         except Nomination.DoesNotExist:
-            nomination = None       
-             
+            nomination = None                    
 
     except Album.DoesNotExist:
         ## if album NOT in database, get from API
@@ -338,7 +335,6 @@ def register(request):
     else:
         return render(request, "aotw/register.html")
 
-
 def login_view(request):    
     if request.method == "POST":
 
@@ -361,6 +357,11 @@ def login_view(request):
 
 def logout_view(request):    
     logout(request)
+    return HttpResponseRedirect(reverse("index"))
+
+def demo_view(request):    
+    user = authenticate(request, username='demo', password='password')
+    login(request, user)
     return HttpResponseRedirect(reverse("index"))
 
 
